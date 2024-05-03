@@ -4,79 +4,80 @@ using FluentAssertions;
 using NSubstitute;
 using Sample.Domain.Entities;
 using Sample.Domain.Misc;
+using Sample.Domain.Repositories;
 using Sample.Service.Dto;
+using Sample.Service.Implements;
+using Sample.ServiceTests.Utilities;
 using Sample.TestResource.AutoFixture;
 
 namespace Sample.ServiceTests.Implements;
 
-public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
+public class ShipperServiceTests
 {
-    private readonly ShipperServiceClassFixture _classFixture;
-
-    private readonly StubShipperService _stub;
-
-    public ShipperServiceTests(ShipperServiceClassFixture classFixture)
-    {
-        this._classFixture = classFixture;
-        this._stub = classFixture.Stub;
-    }
-
     //---------------------------------------------------------------------------------------------
     // IsExistsAsync
 
-    [Fact]
-    public async Task IsExistsAsync_輸入的ShipperId為0時_應拋出ArgumentOutOfRangeException()
+    [Theory]
+    [AutoTestingData]
+    public async Task IsExistsAsync_輸入的ShipperId為0時_應拋出ArgumentOutOfRangeException(ShipperService sut)
     {
         // arrange
         var shipperId = 0;
 
         // act
         var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
-            () => this._stub.SystemUnderTest.IsExistsAsync(shipperId));
+            () => sut.IsExistsAsync(shipperId));
 
         // assert
         exception.Message.Should().Contain(nameof(shipperId));
     }
 
-    [Fact]
-    public async Task IsExistsAsync_輸入的ShipperId為負1時_應拋出ArgumentOutOfRangeException()
+    [Theory]
+    [AutoTestingData]
+    public async Task IsExistsAsync_輸入的ShipperId為負1時_應拋出ArgumentOutOfRangeException(ShipperService sut)
     {
         // arrange
         var shipperId = -1;
 
         // act
         var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
-            () => this._stub.SystemUnderTest.IsExistsAsync(shipperId));
+            () => sut.IsExistsAsync(shipperId));
 
         // assert
         exception.Message.Should().Contain(nameof(shipperId));
     }
 
-    [Fact]
-    public async Task IsExistsAsync_輸入的ShipperId_資料不存在_應回傳false()
+    [Theory]
+    [AutoTestingData]
+    public async Task IsExistsAsync_輸入的ShipperId_資料不存在_應回傳false(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
         var shipperId = 99;
 
-        this._stub.ShipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(false);
+        shipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(false);
 
         // act
-        var actual = await this._stub.SystemUnderTest.IsExistsAsync(shipperId);
+        var actual = await sut.IsExistsAsync(shipperId);
 
         // assert
         actual.Should().BeFalse();
     }
 
-    [Fact]
-    public async Task IsExistsAsync_輸入的ShipperId_資料有存在_應回傳True()
+    [Theory]
+    [AutoTestingData]
+    public async Task IsExistsAsync_輸入的ShipperId_資料有存在_應回傳True(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
         var shipperId = 99;
 
-        this._stub.ShipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(true);
+        shipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(true);
 
         // act
-        var actual = await this._stub.SystemUnderTest.IsExistsAsync(shipperId);
+        var actual = await sut.IsExistsAsync(shipperId);
 
         // assert
         actual.Should().BeTrue();
@@ -85,61 +86,69 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
     //---------------------------------------------------------------------------------------------
     // GetAsync
 
-    [Fact]
-    public async Task GetAsync_輸入的ShipperId為0時_應拋出ArgumentOutOfRangeException()
+    [Theory]
+    [AutoTestingData]
+    public async Task GetAsync_輸入的ShipperId為0時_應拋出ArgumentOutOfRangeException(ShipperService sut)
     {
         // arrange
         var shipperId = 0;
 
         // act
         var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
-            () => this._stub.SystemUnderTest.GetAsync(shipperId));
+            () => sut.GetAsync(shipperId));
 
         // assert
         exception.Message.Should().Contain(nameof(shipperId));
     }
 
-    [Fact]
-    public async Task GetAsync_輸入的ShipperId為負1時_應拋出ArgumentOutOfRangeException()
+    [Theory]
+    [AutoTestingData]
+    public async Task GetAsync_輸入的ShipperId為負1時_應拋出ArgumentOutOfRangeException(ShipperService sut)
     {
         // arrange
         var shipperId = -1;
 
         // act
         var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
-            () => this._stub.SystemUnderTest.GetAsync(shipperId));
+            () => sut.GetAsync(shipperId));
 
         // assert
         exception.Message.Should().Contain(nameof(shipperId));
     }
 
-    [Fact]
-    public async Task GetAsync_輸入的ShipperId_資料不存在_應回傳null()
+    [Theory]
+    [AutoTestingData]
+    public async Task GetAsync_輸入的ShipperId_資料不存在_應回傳null(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
         var shipperId = 99;
 
-        this._stub.ShipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(false);
+        shipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(false);
 
         // act
-        var actual = await this._stub.SystemUnderTest.GetAsync(shipperId);
+        var actual = await sut.GetAsync(shipperId);
 
         // assert
         actual.Should().BeNull();
     }
 
     [Theory]
-    [AutoData]
-    public async Task GetAsync_輸入的ShipperId_資料有存在_應回傳model(ShipperModel model)
+    [AutoTestingData]
+    public async Task GetAsync_輸入的ShipperId_資料有存在_應回傳model(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut,
+        ShipperModel model)
     {
         // arrange
         var shipperId = model.ShipperId;
 
-        this._stub.ShipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(true);
-        this._stub.ShipperRepository.GetAsync(Arg.Any<int>()).Returns(model);
+        shipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(true);
+        shipperRepository.GetAsync(Arg.Any<int>()).Returns(model);
 
         // act
-        var actual = await this._stub.SystemUnderTest.GetAsync(shipperId);
+        var actual = await sut.GetAsync(shipperId);
 
         // assert
         actual.Should().NotBeNull();
@@ -149,29 +158,33 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
     //---------------------------------------------------------------------------------------------
     // GetTotalCountAsync
 
-    [Fact]
-    public async Task GetTotalCountAsync_資料表裡無資料_應回傳0()
+    [Theory]
+    [AutoTestingData]
+    public async Task GetTotalCountAsync_資料表裡無資料_應回傳0(ShipperService sut)
     {
         // arrange
         var expected = 0;
 
         // act
-        var actual = await this._stub.SystemUnderTest.GetTotalCountAsync();
+        var actual = await sut.GetTotalCountAsync();
 
         // assert
         actual.Should().Be(expected);
     }
 
-    [Fact]
-    public async Task GetTotalCountAsync_資料表裡有10筆資料_應回傳10()
+    [Theory]
+    [AutoTestingData]
+    public async Task GetTotalCountAsync_資料表裡有10筆資料_應回傳10(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
         var expected = 10;
 
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(10);
+        shipperRepository.GetTotalCountAsync().Returns(10);
 
         // act
-        var actual = await this._stub.SystemUnderTest.GetTotalCountAsync();
+        var actual = await sut.GetTotalCountAsync();
 
         // assert
         actual.Should().Be(expected);
@@ -180,27 +193,31 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
     //---------------------------------------------------------------------------------------------
     // GetAllAsync
 
-    [Fact]
-    public async Task GetAllAsync_資料表裡無資料_應回傳空集合()
+    [Theory]
+    [AutoTestingData]
+    public async Task GetAllAsync_資料表裡無資料_應回傳空集合(ShipperService sut)
     {
         // arrange
 
         // act
-        var actual = await this._stub.SystemUnderTest.GetAllAsync();
+        var actual = await sut.GetAllAsync();
 
         // assert
         actual.Should().BeEmpty();
     }
 
     [Theory]
-    [AutoData]
-    public async Task GetAllAsync_資料表裡有10筆資料_回傳的集合裡有10筆([CollectionSize(10)] IEnumerable<ShipperModel> models)
+    [AutoTestingData]
+    public async Task GetAllAsync_資料表裡有10筆資料_回傳的集合裡有10筆(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut,
+        [CollectionSize(10)] IEnumerable<ShipperModel> models)
     {
         // arrange
-        this._stub.ShipperRepository.GetAllAsync().Returns(models);
+        shipperRepository.GetAllAsync().Returns(models);
 
         // act
-        var actual = await this._stub.SystemUnderTest.GetAllAsync();
+        var actual = await sut.GetAllAsync();
 
         // assert
         actual.Should().NotBeEmpty();
@@ -218,63 +235,76 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
     public async Task GetCollectionAsync_from與size輸入不合規格內容_應拋出ArgumentOutOfRangeException(
         int from, int size, string parameterName)
     {
+        // arrange
+        var fixture = AutoFixtureHelper.Create();
+
+        var sut = fixture.Create<ShipperService>();
+
         // act
         var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
-            () => this._stub.SystemUnderTest.GetCollectionAsync(from, size));
+            () => sut.GetCollectionAsync(from, size));
 
         // assert
         exception.Message.Should().Contain(parameterName);
     }
 
-    [Fact]
-    public async Task GetCollectionAsync_from為1_size為10_資料表裡無資料_應回傳空集合()
+    [Theory]
+    [AutoTestingData]
+    public async Task GetCollectionAsync_from為1_size為10_資料表裡無資料_應回傳空集合(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
         const int from = 1;
         const int size = 10;
 
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(0);
+        shipperRepository.GetTotalCountAsync().Returns(0);
 
         // act
-        var actual = await this._stub.SystemUnderTest.GetCollectionAsync(from, size);
-
-        // assert
-        actual.Should().BeEmpty();
-    }
-
-    [Fact]
-    public async Task GetCollectionAsync_from為20_size為10_資料表裡只有10筆資料_from超過總數量_應回傳空集合()
-    {
-        // arrange
-        const int from = 20;
-        const int size = 10;
-
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(10);
-
-        // act
-        var actual = await this._stub.SystemUnderTest.GetCollectionAsync(from, size);
+        var actual = await sut.GetCollectionAsync(from, size);
 
         // assert
         actual.Should().BeEmpty();
     }
 
     [Theory]
-    [AutoData]
+    [AutoTestingData]
+    public async Task GetCollectionAsync_from為20_size為10_資料表裡只有10筆資料_from超過總數量_應回傳空集合(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
+    {
+        // arrange
+        const int from = 20;
+        const int size = 10;
+
+        shipperRepository.GetTotalCountAsync().Returns(10);
+
+        // act
+        var actual = await sut.GetCollectionAsync(from, size);
+
+        // assert
+        actual.Should().BeEmpty();
+    }
+
+    [Theory]
+    [AutoTestingData]
     public async Task GetCollectionAsync_from為1_size為10_資料表裡有5筆資料_回傳集合應有5筆(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut,
         [CollectionSize(5)] IEnumerable<ShipperModel> models)
     {
         // arrange
         const int from = 1;
         const int size = 10;
 
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(5);
+        shipperRepository.GetTotalCountAsync().Returns(5);
 
-        this._stub.ShipperRepository
+        shipperRepository
             .GetCollectionAsync(Arg.Any<int>(), Arg.Any<int>())
             .Returns(models);
 
         // act
-        var actual = await this._stub.SystemUnderTest.GetCollectionAsync(from, size);
+        var actual = await sut.GetCollectionAsync(from, size);
 
         // assert
         actual.Should().NotBeEmpty();
@@ -282,22 +312,24 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
     }
 
     [Theory]
-    [AutoData]
+    [AutoTestingData]
     public async Task GetCollectionAsync_from為6_size為10_資料表裡有10筆資料_回傳集合應有10筆(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut,
         [CollectionSize(20)] IEnumerable<ShipperModel> models)
     {
         // arrange
         const int from = 6;
         const int size = 10;
 
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(10);
+        shipperRepository.GetTotalCountAsync().Returns(10);
 
-        this._stub.ShipperRepository
+        shipperRepository
             .GetCollectionAsync(Arg.Any<int>(), Arg.Any<int>())
             .Returns(models.Skip(5).Take(10));
 
         // act
-        var actual = await this._stub.SystemUnderTest.GetCollectionAsync(from, size);
+        var actual = await sut.GetCollectionAsync(from, size);
 
         // assert
         actual.Should().NotBeEmpty();
@@ -305,22 +337,24 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
     }
 
     [Theory]
-    [AutoData]
+    [AutoTestingData]
     public async Task GetCollectionAsync_from為11_size為10_資料表裡有30筆資料_回傳集合應有10筆(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut,
         [CollectionSize(30)] IEnumerable<ShipperModel> models)
     {
         // arrange
         const int from = 11;
         const int size = 10;
 
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(30);
+        shipperRepository.GetTotalCountAsync().Returns(30);
 
-        this._stub.ShipperRepository
+        shipperRepository
             .GetCollectionAsync(Arg.Any<int>(), Arg.Any<int>())
             .Returns(models.Skip(10).Take(10));
 
         // act
-        var actual = await this._stub.SystemUnderTest.GetCollectionAsync(from, size);
+        var actual = await sut.GetCollectionAsync(from, size);
 
         // assert
         actual.Should().NotBeEmpty();
@@ -338,71 +372,84 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
     public async Task SearchAsync_companyName與phone輸入不合規格的內容_應拋出ArgumentException(string companyName, string phone)
     {
         // arrange
+        var fixture = AutoFixtureHelper.Create();
+
+        var sut = fixture.Create<ShipperService>();
+
         const string exceptionMessage = "companyName 與 phone 不可都為空白";
 
         // act
         var exception = await Assert.ThrowsAsync<ArgumentException>(
-            () => this._stub.SystemUnderTest.SearchAsync(companyName, phone));
+            () => sut.SearchAsync(companyName, phone));
 
         // assert
         exception.Message.Should().Be(exceptionMessage);
     }
 
-    [Fact]
-    public async Task SearchAsync_資料表裡無資料_應回傳空集合()
+    [Theory]
+    [AutoTestingData]
+    public async Task SearchAsync_資料表裡無資料_應回傳空集合(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
         const string companyName = "test";
         const string phone = "02123456789";
 
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(0);
+        shipperRepository.GetTotalCountAsync().Returns(0);
 
         // act
-        var actual = await this._stub.SystemUnderTest.SearchAsync(companyName, phone);
+        var actual = await sut.SearchAsync(companyName, phone);
 
         // assert
         actual.Should().BeEmpty();
     }
 
-    [Fact]
-    public async Task SearchAsync_companyName輸入資料_沒有符合條件的資料_應回傳空集合()
+    [Theory]
+    [AutoTestingData]
+    public async Task SearchAsync_companyName輸入資料_沒有符合條件的資料_應回傳空集合(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
         const string companyName = "test";
         const string phone = "";
 
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(10);
+        shipperRepository.GetTotalCountAsync().Returns(10);
 
-        this._stub.ShipperRepository
+        shipperRepository
             .SearchAsync(Arg.Any<string>(), Arg.Any<string>())
             .Returns(Enumerable.Empty<ShipperModel>());
 
         // act
-        var actual = await this._stub.SystemUnderTest.SearchAsync(companyName, phone);
+        var actual = await sut.SearchAsync(companyName, phone);
 
         // assert
         actual.Should().BeEmpty();
     }
 
-    [Fact]
-    public async Task SearchAsync_companyName輸入資料_phone無輸入_有符合條件的資料_回傳集合應包含符合條件的資料()
+    [Theory]
+    [AutoTestingData]
+    public async Task SearchAsync_companyName輸入資料_phone無輸入_有符合條件的資料_回傳集合應包含符合條件的資料(
+        IFixture fixture,
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
-        var models = this._classFixture.Fixture.Build<ShipperModel>()
-                         .With(x => x.CompanyName, "test")
-                         .CreateMany(1);
+        var models = fixture.Build<ShipperModel>()
+                            .With(x => x.CompanyName, "test")
+                            .CreateMany(1);
 
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(10);
+        shipperRepository.GetTotalCountAsync().Returns(10);
 
-        this._stub.ShipperRepository
-            .SearchAsync(Arg.Any<string>(), Arg.Any<string>())
-            .Returns(models);
+        shipperRepository.SearchAsync(Arg.Any<string>(), Arg.Any<string>())
+                         .Returns(models);
 
         const string companyName = "test";
         const string phone = "";
 
         // act
-        var actual = await this._stub.SystemUnderTest.SearchAsync(companyName, phone);
+        var actual = await sut.SearchAsync(companyName, phone);
 
         // assert
         actual.Should().NotBeEmpty();
@@ -410,25 +457,28 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
         actual.Any(x => x.CompanyName == companyName).Should().BeTrue();
     }
 
-    [Fact]
-    public async Task SearchAsync_companyName無輸入_phone輸入資料_有符合條件的資料_回傳集合應包含符合條件的資料()
+    [Theory]
+    [AutoTestingData]
+    public async Task SearchAsync_companyName無輸入_phone輸入資料_有符合條件的資料_回傳集合應包含符合條件的資料(
+        IFixture fixture,
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
-        var models = this._classFixture.Fixture.Build<ShipperModel>()
-                         .With(x => x.Phone, "02123456789")
-                         .CreateMany(1);
+        var models = fixture.Build<ShipperModel>()
+                            .With(x => x.Phone, "02123456789")
+                            .CreateMany(1);
 
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(10);
+        shipperRepository.GetTotalCountAsync().Returns(10);
 
-        this._stub.ShipperRepository
-            .SearchAsync(Arg.Any<string>(), Arg.Any<string>())
-            .Returns(models);
+        shipperRepository.SearchAsync(Arg.Any<string>(), Arg.Any<string>())
+                         .Returns(models);
 
         const string companyName = "";
         const string phone = "02123456789";
 
         // act
-        var actual = await this._stub.SystemUnderTest.SearchAsync(companyName, phone);
+        var actual = await sut.SearchAsync(companyName, phone);
 
         // assert
         actual.Should().NotBeEmpty();
@@ -436,26 +486,29 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
         actual.Any(x => x.Phone == phone).Should().BeTrue();
     }
 
-    [Fact]
-    public async Task SearchAsync_companyName輸入資料_phone輸入資料_有符合條件的資料_回傳集合應包含符合條件的資料()
+    [Theory]
+    [AutoTestingData]
+    public async Task SearchAsync_companyName輸入資料_phone輸入資料_有符合條件的資料_回傳集合應包含符合條件的資料(
+        IFixture fixture,
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
-        var models = this._classFixture.Fixture.Build<ShipperModel>()
-                         .With(x => x.CompanyName, "demo")
-                         .With(x => x.Phone, "03123456789")
-                         .CreateMany(1);
+        var models = fixture.Build<ShipperModel>()
+                            .With(x => x.CompanyName, "demo")
+                            .With(x => x.Phone, "03123456789")
+                            .CreateMany(1);
 
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(11);
+        shipperRepository.GetTotalCountAsync().Returns(11);
 
-        this._stub.ShipperRepository
-            .SearchAsync(Arg.Any<string>(), Arg.Any<string>())
-            .Returns(models);
+        shipperRepository.SearchAsync(Arg.Any<string>(), Arg.Any<string>())
+                         .Returns(models);
 
         const string companyName = "demo";
         const string phone = "03123456789";
 
         // act
-        var actual = await this._stub.SystemUnderTest.SearchAsync(companyName, phone);
+        var actual = await sut.SearchAsync(companyName, phone);
 
         // assert
         actual.Should().NotBeEmpty();
@@ -463,55 +516,60 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
         actual.Any(x => x.CompanyName == companyName && x.Phone == phone).Should().BeTrue();
     }
 
-    [Fact]
-    public async Task SearchAsync_companyName輸入資料_phone輸入資料_沒有符合條件的資料_應回傳空集合()
+    [Theory]
+    [AutoTestingData]
+    public async Task SearchAsync_companyName輸入資料_phone輸入資料_沒有符合條件的資料_應回傳空集合(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(10);
+        shipperRepository.GetTotalCountAsync().Returns(10);
 
-        this._stub.ShipperRepository
-            .SearchAsync(Arg.Any<string>(), Arg.Any<string>())
-            .Returns(Enumerable.Empty<ShipperModel>());
+        shipperRepository.SearchAsync(Arg.Any<string>(), Arg.Any<string>())
+                         .Returns(Enumerable.Empty<ShipperModel>());
 
         const string companyName = "try";
         const string phone = "04123456789";
 
         // act
-        var actual = await this._stub.SystemUnderTest.SearchAsync(companyName, phone);
+        var actual = await sut.SearchAsync(companyName, phone);
 
         // assert
         actual.Should().BeEmpty();
     }
 
-    [Fact]
-    public async Task SearchAsync_companyName輸入資料_phone無輸入_有2筆符合條件的資料_回傳集合應有兩筆()
+    [Theory]
+    [AutoTestingData]
+    public async Task SearchAsync_companyName輸入資料_phone無輸入_有2筆符合條件的資料_回傳集合應有兩筆(
+        IFixture fixture,
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
-        var model1 = this._classFixture.Fixture.Build<ShipperModel>()
-                         .With(x => x.CompanyName, "note")
-                         .Create();
+        var model1 = fixture.Build<ShipperModel>()
+                            .With(x => x.CompanyName, "note")
+                            .Create();
 
-        var model2 = this._classFixture.Fixture.Build<ShipperModel>()
-                         .With(x => x.CompanyName, "node")
-                         .Create();
+        var model2 = fixture.Build<ShipperModel>()
+                            .With(x => x.CompanyName, "node")
+                            .Create();
 
         var models = new List<ShipperModel>
         {
             model1,
             model2
         };
-        
-        this._stub.ShipperRepository.GetTotalCountAsync().Returns(10);
 
-        this._stub.ShipperRepository
-            .SearchAsync(Arg.Any<string>(), Arg.Any<string>())
-            .Returns(models);
-        
+        shipperRepository.GetTotalCountAsync().Returns(10);
+
+        shipperRepository.SearchAsync(Arg.Any<string>(), Arg.Any<string>())
+                         .Returns(models);
+
         const string companyName = "no";
         const string phone = "";
 
         // act
-        var actual = await this._stub.SystemUnderTest.SearchAsync(companyName, phone);
+        var actual = await sut.SearchAsync(companyName, phone);
 
         // assert
         actual.Should().NotBeEmpty();
@@ -522,31 +580,34 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
     //---------------------------------------------------------------------------------------------
     // CreateAsync
 
-    [Fact]
-    public async Task CreateAsync_輸入的model為null時_應拋出ArgumentNullException()
+    [Theory]
+    [AutoTestingData]
+    public async Task CreateAsync_輸入的model為null時_應拋出ArgumentNullException(ShipperService sut)
     {
         // arrange
         ShipperDto shipperDto = null;
 
         // act
         var exception = await Assert.ThrowsAsync<ArgumentNullException>(
-            () => this._stub.SystemUnderTest.CreateAsync(shipperDto));
+            () => sut.CreateAsync(shipperDto));
 
         // assert
         exception.Message.Should().Contain("shipper");
     }
 
     [Theory]
-    [AutoData]
-    public async Task CreateAsync_輸入一個有資料的model_新增完成_回傳Result的Success應為true(ShipperDto shipperDto)
+    [AutoTestingData]
+    public async Task CreateAsync_輸入一個有資料的model_新增完成_回傳Result的Success應為true(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut,
+        ShipperDto shipperDto)
     {
         // arrange
-        this._stub.ShipperRepository
-            .CreateAsync(Arg.Any<ShipperModel>())
-            .Returns(new Result { Success = true, AffectRows = 1 });
+        shipperRepository.CreateAsync(Arg.Any<ShipperModel>())
+                         .Returns(new Result { Success = true, AffectRows = 1 });
 
         // act
-        var actual = await this._stub.SystemUnderTest.CreateAsync(shipperDto);
+        var actual = await sut.CreateAsync(shipperDto);
 
         // assert
         actual.Success.Should().BeTrue();
@@ -556,29 +617,33 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
     //---------------------------------------------------------------------------------------------
     // UpdateAsync
 
-    [Fact]
-    public async Task UpdateAsync_輸入的model為null時_應拋出ArgumentNullException()
+    [Theory]
+    [AutoTestingData]
+    public async Task UpdateAsync_輸入的model為null時_應拋出ArgumentNullException(ShipperService sut)
     {
         // arrange
         ShipperDto shipperDto = null;
 
         // act
         var exception = await Assert.ThrowsAsync<ArgumentNullException>(
-            () => this._stub.SystemUnderTest.UpdateAsync(shipperDto));
+            () => sut.UpdateAsync(shipperDto));
 
         // assert
         exception.Message.Should().Contain("shipper");
     }
 
     [Theory]
-    [AutoData]
-    public async Task UpdateAsync_輸入model_要修改的資料並不存在_更新錯誤_回傳Result的Success應為false(ShipperDto shipperDto)
+    [AutoTestingData]
+    public async Task UpdateAsync_輸入model_要修改的資料並不存在_更新錯誤_回傳Result的Success應為false(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut,
+        ShipperDto shipperDto)
     {
         // arrange
-        this._stub.ShipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(false);
+        shipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(false);
 
         // act
-        var actual = await this._stub.SystemUnderTest.UpdateAsync(shipperDto);
+        var actual = await sut.UpdateAsync(shipperDto);
 
         // assert
         actual.Success.Should().BeFalse();
@@ -586,20 +651,22 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
     }
 
     [Theory]
-    [AutoData]
-    public async Task UpdateAsync_輸入model_要修改的資料存在_更新完成_回傳Result的Success應為true(ShipperDto shipperDto)
+    [AutoTestingData]
+    public async Task UpdateAsync_輸入model_要修改的資料存在_更新完成_回傳Result的Success應為true(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut,
+        ShipperDto shipperDto)
     {
         // arrange
         shipperDto.CompanyName = "update";
 
-        this._stub.ShipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(true);
+        shipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(true);
 
-        this._stub.ShipperRepository
-            .UpdateAsync(Arg.Any<ShipperModel>())
-            .Returns(new Result { Success = true, AffectRows = 1 });
+        shipperRepository.UpdateAsync(Arg.Any<ShipperModel>())
+                         .Returns(new Result { Success = true, AffectRows = 1 });
 
         // act
-        var actual = await this._stub.SystemUnderTest.UpdateAsync(shipperDto);
+        var actual = await sut.UpdateAsync(shipperDto);
 
         // assert
         actual.Success.Should().BeTrue();
@@ -608,44 +675,49 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
     //---------------------------------------------------------------------------------------------
     // DeleteAsync
 
-    [Fact]
-    public async Task DeleteAsync_輸入的ShipperId為0時_應拋出ArgumentOutOfRangeException()
+    [Theory]
+    [AutoTestingData]
+    public async Task DeleteAsync_輸入的ShipperId為0時_應拋出ArgumentOutOfRangeException(ShipperService sut)
     {
         // arrange
         var shipperId = 0;
 
         // act
         var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
-            () => this._stub.SystemUnderTest.DeleteAsync(shipperId));
+            () => sut.DeleteAsync(shipperId));
 
         // assert
         exception.Message.Should().Contain(nameof(shipperId));
     }
 
-    [Fact]
-    public async Task DeleteAsync_輸入的ShipperId為負1時_應拋出ArgumentOutOfRangeException()
+    [Theory]
+    [AutoTestingData]
+    public async Task DeleteAsync_輸入的ShipperId為負1時_應拋出ArgumentOutOfRangeException(ShipperService sut)
     {
         // arrange
         var shipperId = -1;
 
         // act
         var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
-            () => this._stub.SystemUnderTest.DeleteAsync(shipperId));
+            () => sut.DeleteAsync(shipperId));
 
         // assert
         exception.Message.Should().Contain(nameof(shipperId));
     }
 
-    [Fact]
-    public async Task DeleteAsync_輸入ShipperId_要刪除的資料並不存在_刪除錯誤_回傳Result的Success應為false()
+    [Theory]
+    [AutoTestingData]
+    public async Task DeleteAsync_輸入ShipperId_要刪除的資料並不存在_刪除錯誤_回傳Result的Success應為false(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut)
     {
         // arrange
         var shipperId = 999;
 
-        this._stub.ShipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(false);
+        shipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(false);
 
         // act
-        var actual = await this._stub.SystemUnderTest.DeleteAsync(shipperId);
+        var actual = await sut.DeleteAsync(shipperId);
 
         // assert
         actual.Success.Should().BeFalse();
@@ -653,18 +725,20 @@ public class ShipperServiceTests : IClassFixture<ShipperServiceClassFixture>
     }
 
     [Theory]
-    [AutoData]
-    public async Task DeleteAsync_輸入model_要刪除的資料存在_刪除完成_回傳Result的Success應為true(ShipperDto shipperDto)
+    [AutoTestingData]
+    public async Task DeleteAsync_輸入model_要刪除的資料存在_刪除完成_回傳Result的Success應為true(
+        [Frozen] IShipperRepository shipperRepository,
+        ShipperService sut,
+        ShipperDto shipperDto)
     {
         // arrange
-        this._stub.ShipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(true);
+        shipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(true);
 
-        this._stub.ShipperRepository
-            .DeleteAsync(Arg.Any<int>())
-            .Returns(new Result { Success = true, AffectRows = 1 });
+        shipperRepository.DeleteAsync(Arg.Any<int>())
+                         .Returns(new Result { Success = true, AffectRows = 1 });
 
         // act
-        var actual = await this._stub.SystemUnderTest.DeleteAsync(shipperDto.ShipperId);
+        var actual = await sut.DeleteAsync(shipperDto.ShipperId);
 
         // assert
         actual.Success.Should().BeTrue();

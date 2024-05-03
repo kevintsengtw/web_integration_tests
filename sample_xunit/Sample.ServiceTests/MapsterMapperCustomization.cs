@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AutoFixture;
 using Mapster;
 using MapsterMapper;
@@ -6,8 +6,15 @@ using Sample.Service.MapConfig;
 
 namespace Sample.ServiceTests;
 
+/// <summary>
+/// class MapsterMapperCustomization
+/// </summary>
 public class MapsterMapperCustomization : ICustomization
 {
+    /// <summary>
+    /// Customizes the fixture
+    /// </summary>
+    /// <param name="fixture">The fixture</param>
     public void Customize(IFixture fixture)
     {
         fixture.Register(() => this.Mapper);
@@ -23,10 +30,9 @@ public class MapsterMapperCustomization : ICustomization
             {
                 return this._mapper;
             }
-
-            var serviceAssembly = typeof(ServiceMapRegister).Assembly;
-            TypeAdapterConfig.GlobalSettings.Scan(serviceAssembly);
-            var typeAdapterConfig = TypeAdapterConfig.GlobalSettings;
+            
+            var typeAdapterConfig = new TypeAdapterConfig();
+            typeAdapterConfig.Scan(typeof(ServiceMapRegister).Assembly);
             this._mapper = new Mapper(typeAdapterConfig);
             return this._mapper;
         }
