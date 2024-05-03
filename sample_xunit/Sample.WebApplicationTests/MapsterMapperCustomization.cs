@@ -24,9 +24,8 @@ public class MapsterMapperCustomization : ICustomization
                 return this._mapper;
             }
 
-            var serviceAssembly = typeof(WebApplicationMapRegister).Assembly;
-            TypeAdapterConfig.GlobalSettings.Scan(serviceAssembly);
-            var typeAdapterConfig = TypeAdapterConfig.GlobalSettings;
+            var typeAdapterConfig = new TypeAdapterConfig();
+            typeAdapterConfig.Scan(typeof(WebApplicationMapRegister).Assembly);
             this._mapper = new Mapper(typeAdapterConfig);
             return this._mapper;
         }
