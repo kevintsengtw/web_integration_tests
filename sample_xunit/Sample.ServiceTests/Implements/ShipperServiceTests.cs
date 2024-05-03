@@ -7,7 +7,7 @@ using Sample.Domain.Misc;
 using Sample.Domain.Repositories;
 using Sample.Service.Dto;
 using Sample.Service.Implements;
-using Sample.ServiceTests.Utilities;
+using Sample.ServiceTests.AutoFixtureConfigurations;
 using Sample.TestResource.AutoFixture;
 
 namespace Sample.ServiceTests.Implements;
@@ -18,7 +18,7 @@ public class ShipperServiceTests
     // IsExistsAsync
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task IsExistsAsync_輸入的ShipperId為0時_應拋出ArgumentOutOfRangeException(ShipperService sut)
     {
         // arrange
@@ -33,7 +33,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task IsExistsAsync_輸入的ShipperId為負1時_應拋出ArgumentOutOfRangeException(ShipperService sut)
     {
         // arrange
@@ -48,7 +48,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task IsExistsAsync_輸入的ShipperId_資料不存在_應回傳false(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut)
@@ -66,7 +66,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task IsExistsAsync_輸入的ShipperId_資料有存在_應回傳True(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut)
@@ -87,7 +87,7 @@ public class ShipperServiceTests
     // GetAsync
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetAsync_輸入的ShipperId為0時_應拋出ArgumentOutOfRangeException(ShipperService sut)
     {
         // arrange
@@ -102,7 +102,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetAsync_輸入的ShipperId為負1時_應拋出ArgumentOutOfRangeException(ShipperService sut)
     {
         // arrange
@@ -117,7 +117,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetAsync_輸入的ShipperId_資料不存在_應回傳null(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut)
@@ -135,7 +135,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetAsync_輸入的ShipperId_資料有存在_應回傳model(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut,
@@ -159,7 +159,7 @@ public class ShipperServiceTests
     // GetTotalCountAsync
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetTotalCountAsync_資料表裡無資料_應回傳0(ShipperService sut)
     {
         // arrange
@@ -173,7 +173,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetTotalCountAsync_資料表裡有10筆資料_應回傳10(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut)
@@ -194,7 +194,7 @@ public class ShipperServiceTests
     // GetAllAsync
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetAllAsync_資料表裡無資料_應回傳空集合(ShipperService sut)
     {
         // arrange
@@ -207,7 +207,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetAllAsync_資料表裡有10筆資料_回傳的集合裡有10筆(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut,
@@ -228,18 +228,13 @@ public class ShipperServiceTests
     // GetCollectionAsync
 
     [Theory]
-    [InlineData(0, 10, nameof(from))]
-    [InlineData(-1, 10, nameof(from))]
-    [InlineData(1, 0, nameof(size))]
-    [InlineData(1, -1, nameof(size))]
+    [InlineWithCustomization(0, 10, nameof(from))]
+    [InlineWithCustomization(-1, 10, nameof(from))]
+    [InlineWithCustomization(1, 0, nameof(size))]
+    [InlineWithCustomization(1, -1, nameof(size))]
     public async Task GetCollectionAsync_from與size輸入不合規格內容_應拋出ArgumentOutOfRangeException(
-        int from, int size, string parameterName)
+        int from, int size, string parameterName, ShipperService sut)
     {
-        // arrange
-        var fixture = AutoFixtureHelper.Create();
-
-        var sut = fixture.Create<ShipperService>();
-
         // act
         var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
             () => sut.GetCollectionAsync(from, size));
@@ -249,7 +244,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetCollectionAsync_from為1_size為10_資料表裡無資料_應回傳空集合(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut)
@@ -268,7 +263,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetCollectionAsync_from為20_size為10_資料表裡只有10筆資料_from超過總數量_應回傳空集合(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut)
@@ -287,7 +282,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetCollectionAsync_from為1_size為10_資料表裡有5筆資料_回傳集合應有5筆(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut,
@@ -312,7 +307,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetCollectionAsync_from為6_size為10_資料表裡有10筆資料_回傳集合應有10筆(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut,
@@ -337,7 +332,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task GetCollectionAsync_from為11_size為10_資料表裡有30筆資料_回傳集合應有10筆(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut,
@@ -365,17 +360,14 @@ public class ShipperServiceTests
     // SearchAsync
 
     [Theory]
-    [InlineData(null, null)]
-    [InlineData("", null)]
-    [InlineData(null, "")]
-    [InlineData(null, null)]
-    public async Task SearchAsync_companyName與phone輸入不合規格的內容_應拋出ArgumentException(string companyName, string phone)
+    [InlineWithCustomization(null, null)]
+    [InlineWithCustomization("", null)]
+    [InlineWithCustomization(null, "")]
+    [InlineWithCustomization(null, null)]
+    public async Task SearchAsync_companyName與phone輸入不合規格的內容_應拋出ArgumentException(
+        string companyName, string phone, ShipperService sut)
     {
         // arrange
-        var fixture = AutoFixtureHelper.Create();
-
-        var sut = fixture.Create<ShipperService>();
-
         const string exceptionMessage = "companyName 與 phone 不可都為空白";
 
         // act
@@ -387,7 +379,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task SearchAsync_資料表裡無資料_應回傳空集合(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut)
@@ -406,7 +398,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task SearchAsync_companyName輸入資料_沒有符合條件的資料_應回傳空集合(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut)
@@ -429,7 +421,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task SearchAsync_companyName輸入資料_phone無輸入_有符合條件的資料_回傳集合應包含符合條件的資料(
         IFixture fixture,
         [Frozen] IShipperRepository shipperRepository,
@@ -458,7 +450,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task SearchAsync_companyName無輸入_phone輸入資料_有符合條件的資料_回傳集合應包含符合條件的資料(
         IFixture fixture,
         [Frozen] IShipperRepository shipperRepository,
@@ -487,7 +479,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task SearchAsync_companyName輸入資料_phone輸入資料_有符合條件的資料_回傳集合應包含符合條件的資料(
         IFixture fixture,
         [Frozen] IShipperRepository shipperRepository,
@@ -517,7 +509,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task SearchAsync_companyName輸入資料_phone輸入資料_沒有符合條件的資料_應回傳空集合(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut)
@@ -539,7 +531,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task SearchAsync_companyName輸入資料_phone無輸入_有2筆符合條件的資料_回傳集合應有兩筆(
         IFixture fixture,
         [Frozen] IShipperRepository shipperRepository,
@@ -581,7 +573,7 @@ public class ShipperServiceTests
     // CreateAsync
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task CreateAsync_輸入的model為null時_應拋出ArgumentNullException(ShipperService sut)
     {
         // arrange
@@ -596,7 +588,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task CreateAsync_輸入一個有資料的model_新增完成_回傳Result的Success應為true(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut,
@@ -618,7 +610,7 @@ public class ShipperServiceTests
     // UpdateAsync
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task UpdateAsync_輸入的model為null時_應拋出ArgumentNullException(ShipperService sut)
     {
         // arrange
@@ -633,7 +625,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task UpdateAsync_輸入model_要修改的資料並不存在_更新錯誤_回傳Result的Success應為false(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut,
@@ -651,7 +643,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task UpdateAsync_輸入model_要修改的資料存在_更新完成_回傳Result的Success應為true(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut,
@@ -676,7 +668,7 @@ public class ShipperServiceTests
     // DeleteAsync
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task DeleteAsync_輸入的ShipperId為0時_應拋出ArgumentOutOfRangeException(ShipperService sut)
     {
         // arrange
@@ -691,7 +683,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task DeleteAsync_輸入的ShipperId為負1時_應拋出ArgumentOutOfRangeException(ShipperService sut)
     {
         // arrange
@@ -706,7 +698,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task DeleteAsync_輸入ShipperId_要刪除的資料並不存在_刪除錯誤_回傳Result的Success應為false(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut)
@@ -725,7 +717,7 @@ public class ShipperServiceTests
     }
 
     [Theory]
-    [AutoTestingData]
+    [AutoDataWithCustomization]
     public async Task DeleteAsync_輸入model_要刪除的資料存在_刪除完成_回傳Result的Success應為true(
         [Frozen] IShipperRepository shipperRepository,
         ShipperService sut,

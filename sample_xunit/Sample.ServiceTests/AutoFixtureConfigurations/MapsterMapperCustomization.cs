@@ -1,10 +1,9 @@
-using System;
 using AutoFixture;
 using Mapster;
 using MapsterMapper;
 using Sample.Service.MapConfig;
 
-namespace Sample.ServiceTests;
+namespace Sample.ServiceTests.AutoFixtureConfigurations;
 
 /// <summary>
 /// class MapsterMapperCustomization

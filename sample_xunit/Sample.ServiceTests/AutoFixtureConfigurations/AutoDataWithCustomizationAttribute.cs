@@ -2,18 +2,18 @@ using AutoFixture;
 using AutoFixture.AutoNSubstitute;
 using AutoFixture.Xunit2;
 
-namespace Sample.ServiceTests.Utilities;
+namespace Sample.ServiceTests.AutoFixtureConfigurations;
 
 /// <summary>
-/// class AutoTestingDataAttribute
+/// class AutoDataWithCustomizationAttribute
 /// </summary>
 /// <seealso cref="AutoDataAttribute"/>
-public class AutoTestingDataAttribute : AutoDataAttribute
+public class AutoDataWithCustomizationAttribute : AutoDataAttribute
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="AutoTestingDataAttribute"/> class
+    /// Initializes a new instance of the <see cref="AutoDataWithCustomizationAttribute"/> class
     /// </summary>
-    public AutoTestingDataAttribute() : base(() =>
+    public AutoDataWithCustomizationAttribute() : base(() =>
     {
         var fixture = new Fixture().Customize(new AutoNSubstituteCustomization())
                                    .Customize(new MapsterMapperCustomization());
