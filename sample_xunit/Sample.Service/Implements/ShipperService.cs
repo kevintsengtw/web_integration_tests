@@ -123,13 +123,13 @@ public class ShipperService : IShipperService
         {
             throw new ArgumentException("companyName 與 phone 不可都為空白");
         }
-        
+
         var totalCount = await this.GetTotalCountAsync();
         if (totalCount.Equals(0))
         {
             return Enumerable.Empty<ShipperDto>();
         }
-        
+
         var models = await this._shipperRepository.SearchAsync(companyName, phone);
         var shippers = this._mapper.Map<IEnumerable<ShipperDto>>(models);
         return shippers;

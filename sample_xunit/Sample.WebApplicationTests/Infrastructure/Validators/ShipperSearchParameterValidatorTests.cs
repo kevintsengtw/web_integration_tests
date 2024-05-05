@@ -12,7 +12,7 @@ public class ShipperSearchParameterValidatorTests
     {
         this._validator = new ShipperSearchParameterValidator();
     }
-    
+
     //---------------------------------------------------------------------------------------------
 
     [Fact]
@@ -26,7 +26,7 @@ public class ShipperSearchParameterValidatorTests
 
         result.ShouldHaveValidationErrorFor(x => x.CompanyName);
     }
-    
+
     [Fact]
     public void Validate_CompanyName與Phone都為空白字串_驗證結果應有error()
     {
@@ -38,7 +38,7 @@ public class ShipperSearchParameterValidatorTests
 
         result.ShouldHaveValidationErrorFor(x => x.CompanyName);
     }
-    
+
     [Fact]
     public void Validate_CompanyName為null_Phone為空白字串_驗證結果應有error()
     {
@@ -50,7 +50,7 @@ public class ShipperSearchParameterValidatorTests
 
         result.ShouldHaveValidationErrorFor(x => x.CompanyName);
     }
-    
+
     [Fact]
     public void Validate_CompanyName為空白字串_Phone為null_驗證結果應有error()
     {
@@ -62,7 +62,7 @@ public class ShipperSearchParameterValidatorTests
 
         result.ShouldHaveValidationErrorFor(x => x.CompanyName);
     }
-    
+
     [Fact]
     public void Validate_CompanyName為null_Phone有值_驗證結果不應有error()
     {
@@ -72,9 +72,9 @@ public class ShipperSearchParameterValidatorTests
             Phone = "02123456789"
         });
 
-        result.ShouldNotHaveValidationErrorFor(x=>x.CompanyName);
+        result.ShouldNotHaveValidationErrorFor(x => x.CompanyName);
     }
-    
+
     [Fact]
     public void Validate_CompanyName為空白字串_Phone有值_驗證結果不應有error()
     {
@@ -84,9 +84,9 @@ public class ShipperSearchParameterValidatorTests
             Phone = "02123456789"
         });
 
-        result.ShouldNotHaveValidationErrorFor(x=>x.CompanyName);
+        result.ShouldNotHaveValidationErrorFor(x => x.CompanyName);
     }
-    
+
     [Fact]
     public void Validate_CompanyName為有值_Phone為null_驗證結果不應有error()
     {
@@ -96,9 +96,9 @@ public class ShipperSearchParameterValidatorTests
             Phone = null
         });
 
-        result.ShouldNotHaveValidationErrorFor(x=>x.CompanyName);
+        result.ShouldNotHaveValidationErrorFor(x => x.CompanyName);
     }
-    
+
     [Fact]
     public void Validate_CompanyName有值_Phone為空白字串_驗證結果不應有error()
     {
@@ -108,6 +108,6 @@ public class ShipperSearchParameterValidatorTests
             Phone = string.Empty
         });
 
-        result.ShouldNotHaveValidationErrorFor(x=>x.CompanyName);
+        result.ShouldNotHaveValidationErrorFor(x => x.CompanyName);
     }
 }

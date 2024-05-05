@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sample.WebApplicationIntegrationTests.TestData;
+﻿namespace Sample.WebApplicationIntegrationTests.TestData;
 
 /// <summary>
 /// class TableNames

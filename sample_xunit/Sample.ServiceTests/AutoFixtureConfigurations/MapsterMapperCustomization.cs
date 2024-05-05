@@ -29,7 +29,7 @@ public class MapsterMapperCustomization : ICustomization
             {
                 return this._mapper;
             }
-            
+
             var typeAdapterConfig = new TypeAdapterConfig();
             typeAdapterConfig.Scan(typeof(ServiceMapRegister).Assembly);
             this._mapper = new Mapper(typeAdapterConfig);

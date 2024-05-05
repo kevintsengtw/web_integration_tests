@@ -12,7 +12,7 @@ public class ShipperPageParameterValidatorTests
     {
         this._validator = new ShipperPageParameterValidator();
     }
-    
+
     //---------------------------------------------------------------------------------------------
 
     [Fact]
@@ -29,7 +29,7 @@ public class ShipperPageParameterValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.From)
               .WithErrorMessage(expectedMessage);
     }
-    
+
     [Fact]
     public void Validate_from為負1_驗證結果應有error()
     {
@@ -44,7 +44,7 @@ public class ShipperPageParameterValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.From)
               .WithErrorMessage(expectedMessage);
     }
-    
+
     [Fact]
     public void Validate_size為0_驗證結果應有error()
     {
@@ -59,7 +59,7 @@ public class ShipperPageParameterValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Size)
               .WithErrorMessage(expectedMessage);
     }
-    
+
     [Fact]
     public void Validate_size為負1_驗證結果應有error()
     {
@@ -74,7 +74,7 @@ public class ShipperPageParameterValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Size)
               .WithErrorMessage(expectedMessage);
     }
-    
+
     [Fact]
     public void Validate_size為101_驗證結果應有error()
     {

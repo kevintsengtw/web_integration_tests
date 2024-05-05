@@ -1,6 +1,5 @@
 ﻿// ReSharper disable ClassNeverInstantiated.Global
 
-using System;
 using Microsoft.Data.SqlClient;
 
 namespace Sample.WebApplicationIntegrationTests.DatabaseUtilities;
@@ -21,7 +20,7 @@ public class TestDbConnection
         public const string Database =
             @"Data Source={0};Initial Catalog={1};Persist Security Info=True;User ID=sa;Password={2};Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;TrustServerCertificate=True";
     }
-        
+
     /// <summary>
     /// 輸入 ConnectionString 以取得 SqlConnection.
     /// </summary>

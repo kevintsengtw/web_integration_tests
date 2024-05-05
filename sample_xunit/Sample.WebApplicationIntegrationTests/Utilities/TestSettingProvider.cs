@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace Sample.WebApplicationIntegrationTests.Utilities;
 
@@ -9,7 +8,7 @@ namespace Sample.WebApplicationIntegrationTests.Utilities;
 public static class TestSettingProvider
 {
     public static string SettingFile { get; set; } = "TestSettings.json";
-    
+
     /// <summary>
     /// Get Environment Name
     /// </summary>

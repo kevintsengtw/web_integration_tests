@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 using Correlate;
 using Microsoft.AspNetCore.Diagnostics;
 using Sample.WebApplication.Infrastructure.Exceptions;
-using Sample.WebApplication.Infrastructure.Validators;
 using Sample.WebApplication.Infrastructure.Wrapper.Models;
 
 namespace Sample.WebApplication.Infrastructure.Wrapper.ExceptionHandlers;

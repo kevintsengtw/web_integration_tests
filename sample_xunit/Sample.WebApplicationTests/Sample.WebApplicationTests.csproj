@@ -11,18 +11,18 @@
     <ItemGroup>
         <PackageReference Include="AutoFixture" Version="4.18.1"/>
         <PackageReference Include="AutoFixture.AutoNSubstitute" Version="4.18.1"/>
-        <PackageReference Include="AutoFixture.Xunit2" Version="4.18.1" />
+        <PackageReference Include="AutoFixture.Xunit2" Version="4.18.1"/>
         <PackageReference Include="FluentAssertions" Version="6.12.0"/>
         <PackageReference Include="FluentAssertions.AspNetCore.Mvc" Version="4.2.0"/>
-        <PackageReference Include="FluentValidation" Version="11.9.1" />
+        <PackageReference Include="FluentValidation" Version="11.9.1"/>
         <PackageReference Include="Mapster" Version="7.4.0"/>
         <PackageReference Include="coverlet.collector" Version="6.0.0"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
         <PackageReference Include="NSubstitute" Version="5.1.0"/>
-        <PackageReference Include="xunit" Version="2.7.1" />
+        <PackageReference Include="xunit" Version="2.8.0"/>
         <PackageReference Include="xunit.runner.visualstudio" Version="2.5.8">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
 
@@ -31,8 +31,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Sample.TestResource\Sample.TestResource.csproj" />
-      <ProjectReference Include="..\Sample.WebApplication\Sample.WebApplication.csproj" />
+        <ProjectReference Include="..\Sample.TestResource\Sample.TestResource.csproj"/>
+        <ProjectReference Include="..\Sample.WebApplication\Sample.WebApplication.csproj"/>
     </ItemGroup>
 
 </Project>

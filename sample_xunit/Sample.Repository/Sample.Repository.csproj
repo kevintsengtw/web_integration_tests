@@ -7,18 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Sample.Domain\Sample.Domain.csproj" />
+        <ProjectReference Include="..\Sample.Domain\Sample.Domain.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Dapper" Version="2.1.28" />
-      <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
-      <PackageReference Include="Throw" Version="1.4.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Settings\" />
+        <PackageReference Include="Dapper" Version="2.1.28"/>
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2"/>
+        <PackageReference Include="Throw" Version="1.4.0"/>
     </ItemGroup>
 
 </Project>

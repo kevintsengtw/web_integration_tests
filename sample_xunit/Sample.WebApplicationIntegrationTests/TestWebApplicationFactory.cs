@@ -12,7 +12,7 @@ namespace Sample.WebApplicationIntegrationTests;
 /// Class TestWebApplicationFactory
 /// </summary>
 /// <typeparam name="TProgram"></typeparam>
-public class TestWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> 
+public class TestWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram>
     where TProgram : Program
 {
     /// <summary>
@@ -53,7 +53,7 @@ public class TestWebApplicationFactory<TProgram> : WebApplicationFactory<TProgra
                     InstanceName = "Sample.WebApplication",
                     RedisConfiguration = new RedisConfiguration
                     {
-                        Hosts = ["127.0.0.1"], 
+                        Hosts = ["127.0.0.1"],
                         Ports = [ProjectFixture.RedisPort]
                     }
                 };

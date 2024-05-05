@@ -1,5 +1,3 @@
-using System;
-
 namespace Sample.WebApplication.Infrastructure.Wrapper.Filters;
 
 /// <summary>

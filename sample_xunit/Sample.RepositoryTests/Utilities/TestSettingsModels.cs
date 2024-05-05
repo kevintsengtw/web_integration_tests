@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sample.RepositoryTests.Utilities;
+﻿namespace Sample.RepositoryTests.Utilities;
 
 public class TestSettings
 {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sample.WebApplication.Infrastructure.Wrapper.Middlewares;
+﻿namespace Sample.WebApplication.Infrastructure.Wrapper.Middlewares;
 
 /// <summary>
 /// class SampleExceptionHandlingMiddlewareExtensions

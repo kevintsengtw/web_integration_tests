@@ -1,4 +1,3 @@
-using System;
 using System.Text.Json.Serialization;
 
 namespace Sample.WebApplication.Infrastructure.Wrapper.Models;
@@ -15,7 +14,7 @@ public class SuccessResultOutputModel<T>
     [JsonPropertyOrder(0)]
     [JsonPropertyName("id")]
     public string CorrelationId { get; set; }
-    
+
     /// <summary>
     /// Method.
     /// </summary>

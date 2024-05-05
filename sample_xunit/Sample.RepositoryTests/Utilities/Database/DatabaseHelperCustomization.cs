@@ -1,5 +1,4 @@
-﻿using System;
-using AutoFixture;
+﻿using AutoFixture;
 using Microsoft.Extensions.Options;
 using Sample.Domain.Settings;
 using Sample.Repository.Helpers;

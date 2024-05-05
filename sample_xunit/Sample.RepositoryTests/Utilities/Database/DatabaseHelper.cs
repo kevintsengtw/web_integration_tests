@@ -1,4 +1,3 @@
-using System;
 using System.IO.Abstractions;
 using Sample.RepositoryTests.TestData;
 

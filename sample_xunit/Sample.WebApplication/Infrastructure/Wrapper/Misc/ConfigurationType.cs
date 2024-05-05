@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sample.WebApplication.Infrastructure.Wrapper.Misc;
+﻿namespace Sample.WebApplication.Infrastructure.Wrapper.Misc;
 
 /// <summary>
 /// enum ConfigurationType

@@ -1,5 +1,4 @@
-﻿using System;
-using DotNet.Testcontainers.Builders;
+﻿using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 
 namespace Sample.WebApplicationIntegrationTests.Utilities;
@@ -28,7 +27,7 @@ public sealed class MssqlFixture
                         .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(databaseSetting.ContainerPort))
                         .WithAutoRemove(true)
                         .Build();
-        
+
         return container;
     }
 }

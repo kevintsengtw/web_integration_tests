@@ -137,7 +137,7 @@ public class ShipperRepository : IShipperRepository
         {
             return Enumerable.Empty<ShipperModel>();
         }
-        
+
         const string sqlCommand = """
                                   select ShipperId, CompanyName, Phone
                                   from Shippers
@@ -174,7 +174,7 @@ public class ShipperRepository : IShipperRepository
         {
             throw new ArgumentException("companyName 與 phone 不可都為空白");
         }
-        
+
         var totalCount = await this.GetTotalCountAsync();
         if (totalCount.Equals(0))
         {

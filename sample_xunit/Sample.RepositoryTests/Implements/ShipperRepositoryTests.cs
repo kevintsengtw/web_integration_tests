@@ -209,7 +209,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
         actual.Should().NotBeEmpty();
         actual.Should().HaveCount(10);
     }
-    
+
     //---------------------------------------------------------------------------------------------
     // GetCollectionAsync
 
@@ -224,25 +224,25 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
         // act
         var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
             () => this._systemUnderTest.GetCollectionAsync(from, size));
-        
+
         // assert
         exception.Message.Should().Contain(parameterName);
     }
-    
+
     [Fact]
     public async Task GetCollectionAsync_from為1_size為10_資料表裡無資料_應回傳空集合()
     {
         // arrange
         const int from = 1;
         const int size = 10;
-        
+
         // act
         var actual = await this._systemUnderTest.GetCollectionAsync(from, size);
-        
+
         // assert
         actual.Should().BeEmpty();
     }
-    
+
     [Theory]
     [AutoData]
     public async Task GetCollectionAsync_from為1_size為10_資料表裡有5筆資料_回傳集合應有5筆(
@@ -250,36 +250,36 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     {
         // arrange
         models.ForEach(ShipperRepositoryClassFixture.InsertData);
-        
+
         const int from = 1;
         const int size = 10;
-        
+
         // act
         var actual = await this._systemUnderTest.GetCollectionAsync(from, size);
-        
+
         // assert
         actual.Should().NotBeEmpty();
         actual.Should().HaveCount(5);
     }
-    
+
     [Theory]
     [AutoData]
     public async Task GetCollectionAsync_from為20_size為10_資料表裡只有10筆資料_from超過總數量_應回傳空集合(
         [CollectionSize(10)] IEnumerable<ShipperModel> models)
     {
         // arrange
-        models.ForEach(ShipperRepositoryClassFixture.InsertData);        
-        
+        models.ForEach(ShipperRepositoryClassFixture.InsertData);
+
         const int from = 20;
         const int size = 10;
-        
+
         // act
         var actual = await this._systemUnderTest.GetCollectionAsync(from, size);
-        
+
         // assert
         actual.Should().BeEmpty();
     }
-    
+
     [Theory]
     [AutoData]
     public async Task GetCollectionAsync_from為6_size為10_資料表裡有10筆資料_回傳集合應有10筆(
@@ -287,18 +287,18 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     {
         // arrange
         models.ForEach(ShipperRepositoryClassFixture.InsertData);
-        
+
         const int from = 6;
         const int size = 10;
-        
+
         // act
         var actual = await this._systemUnderTest.GetCollectionAsync(from, size);
-        
+
         // assert
         actual.Should().NotBeEmpty();
         actual.Should().HaveCount(10);
     }
-    
+
     [Theory]
     [AutoData]
     public async Task GetCollectionAsync_from為11_size為10_資料表裡有10筆資料_應回傳空集合(
@@ -306,17 +306,17 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     {
         // arrange
         models.ForEach(ShipperRepositoryClassFixture.InsertData);
-        
+
         const int from = 11;
         const int size = 10;
-        
+
         // act
         var actual = await this._systemUnderTest.GetCollectionAsync(from, size);
-        
+
         // assert
         actual.Should().BeEmpty();
     }
-    
+
     //---------------------------------------------------------------------------------------------
     // SearchAsync
 
@@ -329,11 +329,11 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     {
         // arrange
         const string exceptionMessage = "companyName 與 phone 不可都為空白";
-        
+
         // act
         var exception = await Assert.ThrowsAsync<ArgumentException>(
-            ()=> this._systemUnderTest.SearchAsync(companyName, phone));
-        
+            () => this._systemUnderTest.SearchAsync(companyName, phone));
+
         // assert
         exception.Message.Should().Be(exceptionMessage);
     }
@@ -344,31 +344,31 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
         // arrange
         const string companyName = "test";
         const string phone = "02123456789";
-        
+
         // act
         var actual = await this._systemUnderTest.SearchAsync(companyName, phone);
-        
+
         // assert
         actual.Should().BeEmpty();
     }
-    
+
     [Theory]
     [AutoData]
     public async Task SearchAsync_companyName輸入資料_沒有符合條件的資料_應回傳空集合([CollectionSize(10)] IEnumerable<ShipperModel> models)
     {
         // arrange
         models.ForEach(ShipperRepositoryClassFixture.InsertData);
-        
+
         const string companyName = "test";
         const string phone = "";
-        
+
         // act
         var actual = await this._systemUnderTest.SearchAsync(companyName, phone);
-        
+
         // assert
         actual.Should().BeEmpty();
     }
-    
+
     [Theory]
     [AutoData]
     public async Task SearchAsync_companyName輸入資料_phone無輸入_有符合條件的資料_回傳集合應包含符合條件的資料([CollectionSize(10)] List<ShipperModel> models)
@@ -379,21 +379,21 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
                                      .Create();
 
         models.Add(model);
-        
+
         models.ForEach(ShipperRepositoryClassFixture.InsertData);
-        
+
         const string companyName = "test";
         const string phone = "";
-        
+
         // act
         var actual = await this._systemUnderTest.SearchAsync(companyName, phone);
-        
+
         // assert
         actual.Should().NotBeEmpty();
         actual.Should().HaveCount(1);
         actual.Any(x => x.CompanyName == companyName).Should().BeTrue();
-    }    
-    
+    }
+
     [Theory]
     [AutoData]
     public async Task SearchAsync_companyName無輸入_phone輸入資料_有符合條件的資料_回傳集合應包含符合條件的資料([CollectionSize(10)] List<ShipperModel> models)
@@ -404,64 +404,64 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
                                      .Create();
 
         models.Add(model);
-        
+
         models.ForEach(ShipperRepositoryClassFixture.InsertData);
-        
+
         const string companyName = "";
         const string phone = "02123456789";
-        
+
         // act
         var actual = await this._systemUnderTest.SearchAsync(companyName, phone);
-        
+
         // assert
         actual.Should().NotBeEmpty();
         actual.Should().HaveCount(1);
         actual.Any(x => x.Phone == phone).Should().BeTrue();
     }
-    
+
     [Theory]
     [AutoData]
     public async Task SearchAsync_companyName輸入資料_phone輸入資料_有符合條件的資料_回傳集合應包含符合條件的資料([CollectionSize(10)] List<ShipperModel> models)
     {
         // arrange
         var model = RepositoryFixture.Fixture.Build<ShipperModel>()
-                                     .With(x=>x.CompanyName, "demo")
+                                     .With(x => x.CompanyName, "demo")
                                      .With(x => x.Phone, "03123456789")
                                      .Create();
 
         models.Add(model);
-        
+
         models.ForEach(ShipperRepositoryClassFixture.InsertData);
-        
+
         const string companyName = "demo";
         const string phone = "03123456789";
-        
+
         // act
         var actual = await this._systemUnderTest.SearchAsync(companyName, phone);
-        
+
         // assert
         actual.Should().NotBeEmpty();
         actual.Should().HaveCount(1);
         actual.Any(x => x.CompanyName == companyName && x.Phone == phone).Should().BeTrue();
     }
-    
+
     [Theory]
     [AutoData]
     public async Task SearchAsync_companyName輸入資料_phone輸入資料_沒有符合條件的資料_應回傳空集合([CollectionSize(10)] List<ShipperModel> models)
     {
         // arrange
         models.ForEach(ShipperRepositoryClassFixture.InsertData);
-        
+
         const string companyName = "try";
         const string phone = "04123456789";
-        
+
         // act
         var actual = await this._systemUnderTest.SearchAsync(companyName, phone);
-        
+
         // assert
         actual.Should().BeEmpty();
     }
-    
+
     [Fact]
     public async Task SearchAsync_companyName輸入資料_phone無輸入_有2筆符合條件的資料_回傳集合應有兩筆()
     {
@@ -469,26 +469,26 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
         var model1 = RepositoryFixture.Fixture.Build<ShipperModel>()
                                       .With(x => x.CompanyName, "note")
                                       .Create();
-        
+
         var model2 = RepositoryFixture.Fixture.Build<ShipperModel>()
                                       .With(x => x.CompanyName, "node")
                                       .Create();
-        
+
         ShipperRepositoryClassFixture.InsertData(model1);
         ShipperRepositoryClassFixture.InsertData(model2);
-        
+
         const string companyName = "no";
         const string phone = "";
-        
+
         // act
         var actual = await this._systemUnderTest.SearchAsync(companyName, phone);
-        
+
         // assert
         actual.Should().NotBeEmpty();
         actual.Should().HaveCount(2);
         actual.All(x => x.CompanyName.StartsWith("no")).Should().BeTrue();
     }
-    
+
     //---------------------------------------------------------------------------------------------
     // CreateAsync
 
@@ -536,7 +536,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
         // assert
         exception.Message.Should().Contain(nameof(model));
     }
-    
+
     [Theory]
     [AutoData]
     public async Task UpdateAsync_輸入model_要修改的資料並不存在_更新錯誤_回傳Result的Success應為false(ShipperModel model)

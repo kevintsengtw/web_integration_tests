@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -15,7 +14,7 @@ public class ConfigurationFind
     protected ConfigurationFind()
     {
     }
-        
+
     /// <summary>
     /// Gets the type of the configuration.
     /// </summary>
@@ -36,7 +35,7 @@ public class ConfigurationFind
             {
                 continue;
             }
-            
+
             return debuggableAttribute.IsJITOptimizerDisabled ? ConfigurationType.Debug : ConfigurationType.Release;
         }
 

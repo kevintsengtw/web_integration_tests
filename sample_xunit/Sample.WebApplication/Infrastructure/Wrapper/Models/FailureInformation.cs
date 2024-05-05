@@ -1,4 +1,3 @@
-using System;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
@@ -17,7 +16,7 @@ public class FailureInformation
         this.Message = string.Empty;
         this.Description = string.Empty;
     }
-    
+
     /// <summary>
     /// The message.
     /// </summary>

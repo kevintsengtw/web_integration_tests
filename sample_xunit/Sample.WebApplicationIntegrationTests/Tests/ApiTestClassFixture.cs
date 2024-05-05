@@ -1,7 +1,5 @@
 // ReSharper disable ClassNeverInstantiated.Global
 
-using System;
-
 namespace Sample.WebApplicationIntegrationTests.Tests;
 
 /// <summary>

@@ -13,13 +13,13 @@ namespace Sample.WebApplicationTests.Infrastructure.Wrapper.ExceptionHandlers;
 public class GlobalExceptionHandlerTests
 {
     private readonly ILogger<GlobalExceptionHandler> _logger;
-    
+
     private readonly ICorrelationContextAccessor _correlationContextAccessor;
-    
+
     private readonly GlobalExceptionHandler _handler;
 
     private readonly ITestOutputHelper _testOutputHelper;
-    
+
     public GlobalExceptionHandlerTests(ITestOutputHelper testOutputHelper)
     {
         this._logger = Substitute.For<ILogger<GlobalExceptionHandler>>();
@@ -37,25 +37,25 @@ public class GlobalExceptionHandlerTests
         var httpContext = new DefaultHttpContext();
         using var memoryStream = new MemoryStream();
         httpContext.Response.Body = memoryStream;
-        
+
         var exception = new InvalidOperationException("Test exception");
-        
+
         // Act
         var actual = await this._handler.TryHandleAsync(httpContext, exception, CancellationToken.None);
 
         // Assert
         actual.Should().BeTrue();
         httpContext.Response.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
-        
+
         memoryStream.Seek(0, SeekOrigin.Begin);
         var reader = new StreamReader(memoryStream);
         var responseBody = await reader.ReadToEndAsync();
-        
+
         this._testOutputHelper.WriteLine(responseBody);
 
         var failureResultOutputModel = JsonSerializer.Deserialize<FailureResultOutputModel>(responseBody);
         failureResultOutputModel.Status.Should().Be("Error");
-        
+
         var errors = JsonSerializer.Deserialize<List<FailureInformation>>(JsonSerializer.Serialize(failureResultOutputModel.Errors), new JsonSerializerOptions(JsonSerializerDefaults.Web));
         errors.Should().HaveCount(1);
         errors[0].Message.Should().Be("Test exception");

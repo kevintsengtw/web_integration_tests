@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sample.Domain.Settings;
+﻿namespace Sample.Domain.Settings;
 
 /// <summary>
 /// Class DatabaseConnectionOptions

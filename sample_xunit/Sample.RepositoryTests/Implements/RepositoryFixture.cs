@@ -1,5 +1,4 @@
-﻿using System;
-using AutoFixture;
+﻿using AutoFixture;
 using AutoFixture.AutoNSubstitute;
 using Sample.Repository.Helpers;
 using Sample.RepositoryTests.Utilities.Database;

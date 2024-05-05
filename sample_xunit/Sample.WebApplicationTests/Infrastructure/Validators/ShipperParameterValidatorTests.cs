@@ -51,7 +51,7 @@ public class ShipperParameterValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.CompanyName)
               .WithErrorMessage(expectedMessage);
     }
-    
+
     [Fact]
     public void Validate_Phone為null_驗證結果應有error()
     {
@@ -86,5 +86,5 @@ public class ShipperParameterValidatorTests
 
         result.ShouldHaveValidationErrorFor(x => x.Phone)
               .WithErrorMessage(expectedMessage);
-    }    
+    }
 }

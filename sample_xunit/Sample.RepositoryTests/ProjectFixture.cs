@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO.Abstractions;
+﻿using System.IO.Abstractions;
 using DotNet.Testcontainers.Containers;
 using FluentAssertions;
 using Sample.RepositoryTests.Utilities;

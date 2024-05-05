@@ -1,10 +1,9 @@
-﻿using System;
-using AutoFixture;
+﻿using AutoFixture;
 using Mapster;
 using MapsterMapper;
 using Sample.WebApplication.Infrastructure.MapConfig;
 
-namespace Sample.WebApplicationTests;
+namespace Sample.WebApplicationTests.AutoFixtureConfigurations;
 
 public class MapsterMapperCustomization : ICustomization
 {

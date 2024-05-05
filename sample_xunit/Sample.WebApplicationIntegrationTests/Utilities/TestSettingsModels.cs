@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sample.WebApplicationIntegrationTests.Utilities
+﻿namespace Sample.WebApplicationIntegrationTests.Utilities
 {
     public class TestSettings
     {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sample.Domain.Settings;
+﻿namespace Sample.Domain.Settings;
 
 /// <summary>
 /// Class RedisConfigurationOptions
@@ -11,12 +9,12 @@ public class RedisConfigurationOptions
     /// The Section Name
     /// </summary>
     public const string SectionName = "RedisConnection";
-    
+
     /// <summary>
     /// InstanceName
     /// </summary>
     public string InstanceName { get; set; }
-    
+
     /// <summary>
     /// Configuration
     /// </summary>

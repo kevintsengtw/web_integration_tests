@@ -1,5 +1,4 @@
-﻿using System;
-using DotNet.Testcontainers.Builders;
+﻿using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 
 namespace Sample.RepositoryTests.Utilities;

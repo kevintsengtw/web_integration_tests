@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sample.RepositoryTests.TestData;
+﻿namespace Sample.RepositoryTests.TestData;
 
 public static class TableNames
 {
