@@ -109,7 +109,7 @@ public class ShipperController : ControllerBase
     [ProducesResponseType(400, Type = typeof(FailureResultOutputModel<ResponseMessageOutputModel>))]
     public async Task<IActionResult> GetAsync([FromQuery] ShipperIdParameter parameter)
     {
-        // api/shiiper.GET
+        // api/shipper.GET
 
         var exists = await this._shipperService.IsExistsAsync(parameter.ShipperId);
         if (!exists)

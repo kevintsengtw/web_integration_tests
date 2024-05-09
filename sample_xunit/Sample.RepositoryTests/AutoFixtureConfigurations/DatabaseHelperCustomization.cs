@@ -1,9 +1,10 @@
 ﻿using AutoFixture;
+using AutoFixture.Kernel;
 using Microsoft.Extensions.Options;
 using Sample.Domain.Settings;
 using Sample.Repository.Helpers;
 
-namespace Sample.RepositoryTests.Utilities.Database;
+namespace Sample.RepositoryTests.AutoFixtureConfigurations;
 
 /// <summary>
 /// class DatabaseHelperCustomization
@@ -12,26 +13,20 @@ public class DatabaseHelperCustomization : ICustomization
 {
     private static string ConnectionString => ProjectFixture.SampleDbConnectionString;
 
-    public void Customize(IFixture fixture)
-    {
-        fixture.Register(() => this.DatabaseHelper);
-    }
-
-    private DatabaseHelper _databaseHelper;
-
     private DatabaseHelper DatabaseHelper
     {
         get
         {
-            if (this._databaseHelper is not null)
-            {
-                return this._databaseHelper;
-            }
-
             var databaseConnectionOptions = new DatabaseConnectionOptions { ConnectionString = ConnectionString };
             var options = Options.Create(databaseConnectionOptions);
-            this._databaseHelper = new DatabaseHelper(options);
-            return this._databaseHelper;
+            var databaseHelper = new DatabaseHelper(options);
+            return databaseHelper;
         }
+    }
+
+    public void Customize(IFixture fixture)
+    {
+        fixture.Customizations.Add(new TypeRelay(typeof(IDatabaseHelper), typeof(DatabaseHelper)));
+        fixture.Register(() => DatabaseHelper);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Sample.Domain.Entities;
-using Sample.Repository.Implements;
 using Sample.RepositoryTests.TestData;
 using Sample.RepositoryTests.Utilities.Database;
 
@@ -8,19 +7,16 @@ namespace Sample.RepositoryTests.Implements;
 /// <summary>
 /// class ShipperRepositoryClassFixture
 /// </summary>
-public class ShipperRepositoryClassFixture : RepositoryFixture, IDisposable
+public class ShipperRepositoryClassFixture : IDisposable
 {
-    public readonly ShipperRepository SystemUnderTest;
-
     public ShipperRepositoryClassFixture()
     {
-        this.SystemUnderTest = new ShipperRepository(DatabaseHelper);
-        this.CreateTable();
+        CreateTable();
     }
 
     public void Dispose()
     {
-        this.DropTable();
+        DropTable();
     }
 
     private void CreateTable()
