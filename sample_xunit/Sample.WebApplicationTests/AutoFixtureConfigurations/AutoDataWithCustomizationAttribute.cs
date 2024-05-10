@@ -19,11 +19,6 @@ public class AutoDataWithCustomizationAttribute : AutoDataAttribute
         var fixture = new Fixture().Customize(new AutoNSubstituteCustomization())
                                    .Customize(new MapsterMapperCustomization());
 
-        fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
-               .ForEach(x => fixture.Behaviors.Remove(x));
-
-        fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-
         fixture.Customize<BindingInfo>(c => c.OmitAutoProperties());
 
         return fixture;
