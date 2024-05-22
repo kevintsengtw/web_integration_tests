@@ -12,14 +12,8 @@ namespace Sample.WebApplication.Infrastructure.Wrapper.ExceptionHandlers;
 /// </summary>
 public class FluentValidationExceptionHandler : IExceptionHandler
 {
-    /// <summary>
-    /// The logger
-    /// </summary>
     private readonly ILogger<FluentValidationExceptionHandler> _logger;
 
-    /// <summary>
-    /// The correlationContextAccessor
-    /// </summary>
     private readonly ICorrelationContextAccessor _correlationContextAccessor;
 
     /// <summary>

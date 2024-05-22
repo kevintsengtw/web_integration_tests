@@ -232,7 +232,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.POST")]
     public async Task Post_Request的Content未帶入ShipperParameter_應回傳UnsupportedMediaType_StatusCode為415()
     {
-        // arrrange
+        // arrange
 
         // act
         var response = await this._httpClient.PostAsync($"{BaseRequestUrl}", null);
@@ -249,7 +249,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.POST")]
     public async Task Post_parameter的CompanyName為null_資料驗證失敗_StatusCode應回傳400以及驗證錯誤訊息()
     {
-        // arrrange
+        // arrange
         var parameter = new ShipperParameter { CompanyName = null, Phone = "12345678" };
 
         // act
@@ -277,7 +277,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.POST")]
     public async Task Post_parameter的CompanyName為空白字串_資料驗證失敗_StatusCode應回傳400以及驗證錯誤訊息()
     {
-        // arrrange
+        // arrange
         var parameter = new ShipperParameter { CompanyName = "", Phone = "12345678" };
 
         // act
@@ -305,7 +305,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.POST")]
     public async Task Post_parameter的CompanyName字串長度超過40_資料驗證失敗_StatusCode應回傳400以及驗證錯誤訊息()
     {
-        // arrrange
+        // arrange
         var fixture = new Fixture();
         var companyName = string.Join("", fixture.CreateMany<IEnumerable<string>>(2));
         var parameter = new ShipperParameter { CompanyName = companyName, Phone = "12345678" };
@@ -335,7 +335,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.POST")]
     public async Task Post_parameter的Phone為null_資料驗證失敗_StatusCode應回傳400以及驗證錯誤訊息()
     {
-        // arrrange
+        // arrange
         var parameter = new ShipperParameter { CompanyName = "test", Phone = null };
 
         // act
@@ -363,7 +363,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.POST")]
     public async Task Post_parameter的Phone為空白字串_資料驗證失敗_StatusCode應回傳400以及驗證錯誤訊息()
     {
-        // arrrange
+        // arrange
         var parameter = new ShipperParameter { CompanyName = "test", Phone = "" };
 
         // act
@@ -391,7 +391,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.POST")]
     public async Task Post_parameter的Phone字串長度超過24_資料驗證失敗_StatusCode應回傳400以及驗證錯誤訊息()
     {
-        // arrrange
+        // arrange
         var fixture = new Fixture();
         var parameter = new ShipperParameter { CompanyName = "test", Phone = fixture.Create<string>() };
 
@@ -420,7 +420,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.POST")]
     public async Task Post_ShipperParameter的屬性輸入正確的資料_資料建立成功_StatusCode應回傳200以及成功訊息()
     {
-        // arrrange
+        // arrange
         var parameter = new ShipperParameter { CompanyName = "test", Phone = "12345678" };
 
         // act
@@ -448,7 +448,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.PUT")]
     public async Task Put_沒有帶入Parameter_應回傳UnsupportedMediaType_StatusCode為415()
     {
-        // arrrange
+        // arrange
 
         // act
         var response = await this._httpClient.PutAsync($"{BaseRequestUrl}", null);
@@ -465,7 +465,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.PUT")]
     public async Task Put_parameter沒有帶入ShipperId_應回傳BadRequestResult()
     {
-        // arrrange
+        // arrange
         var parameter = new ShipperUpdateParameter { CompanyName = "test", Phone = "12345678" };
 
         // act
@@ -493,7 +493,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.PUT")]
     public async Task Put_parameter沒有帶入CompanyName_應回傳BadRequestResult()
     {
-        // arrrange
+        // arrange
         var parameter = new ShipperUpdateParameter { ShipperId = 1, Phone = "12345678" };
 
         // act
@@ -521,7 +521,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.PUT")]
     public async Task Put_parameter的CompanyName為null_應回傳BadRequestResult()
     {
-        // arrrange
+        // arrange
         var parameter = new ShipperUpdateParameter { ShipperId = 1, CompanyName = null, Phone = "12345678" };
 
         // act
@@ -549,7 +549,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.PUT")]
     public async Task Put_parameter的CompanyName為空白字串_資料驗證失敗_StatusCode應回傳400以及驗證錯誤訊息()
     {
-        // arrrange
+        // arrange
         var parameter = new ShipperUpdateParameter { ShipperId = 1, CompanyName = "", Phone = "12345678" };
 
         // act
@@ -577,7 +577,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.PUT")]
     public async Task Put_parameter的CompanyName字串長度超過40_資料驗證失敗_StatusCode應回傳400以及驗證錯誤訊息()
     {
-        // arrrange
+        // arrange
         var fixture = new Fixture();
         var companyName = string.Join("", fixture.CreateMany<IEnumerable<string>>(2));
         var parameter = new ShipperUpdateParameter { ShipperId = 1, CompanyName = companyName, Phone = "12345678" };
@@ -607,7 +607,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.PUT")]
     public async Task Put_parameter的Phone為null_資料驗證失敗_StatusCode應回傳400以及驗證錯誤訊息()
     {
-        // arrrange
+        // arrange
         var parameter = new ShipperUpdateParameter { ShipperId = 1, CompanyName = "test", Phone = null };
 
         // act
@@ -635,7 +635,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.PUT")]
     public async Task Put_parameter的Phone為空白字串_資料驗證失敗_StatusCode應回傳400以及驗證錯誤訊息()
     {
-        // arrrange
+        // arrange
         var parameter = new ShipperUpdateParameter { ShipperId = 1, CompanyName = "test", Phone = "" };
 
         // act
@@ -663,7 +663,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.PUT")]
     public async Task Put_parameter的Phone字串長度超過24_資料驗證失敗_StatusCode應回傳400以及驗證錯誤訊息()
     {
-        // arrrange
+        // arrange
         var fixture = new Fixture();
         var parameter = new ShipperUpdateParameter { ShipperId = 1, CompanyName = "test", Phone = fixture.Create<string>() };
 
@@ -692,7 +692,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.PUT")]
     public async Task Put_ShipperUpdateParameter的屬性輸入正確的資料_資料更新成功_StatusCode應回傳200以及成功訊息()
     {
-        // arrrange
+        // arrange
 
         //-- 先建立測試資料
         await this._httpClient.PostAsJsonAsync(
@@ -726,7 +726,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.PUT")]
     public async Task Put_ShipperUpdateParameter的屬性輸入正確的資料_資料不存在_StatusCode應回傳400以及失敗訊息()
     {
-        // arrrange
+        // arrange
         var parameter = new ShipperUpdateParameter { ShipperId = 1, CompanyName = "test", Phone = "12345678" };
 
         var expectedMessage = "shipper not exists";
@@ -753,7 +753,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.PUT")]
     public async Task Put_ShipperParameter的屬性輸入正確的資料_資料更新失敗_StatusCode應回傳400以及失敗訊息()
     {
-        // arrrange
+        // arrange
         var shipperService = Substitute.For<IShipperService>();
 
         shipperService.IsExistsAsync(Arg.Any<int>()).Returns(true);
@@ -921,7 +921,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Trait("Category", "api/shipper.DELETE")]
     public async Task Delete_輸入正確的parameter_資料存在_資料更新成功_StatusCode應回傳200以及成功訊息()
     {
-        // arrrange
+        // arrange
 
         //-- 建立測試資料
         await this._httpClient.PostAsJsonAsync(
@@ -1035,7 +1035,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
 
     [Fact]
     [Trait("Owner", "Kevin")]
-    [Trait("Category", "api/shipper/all.GET")]
+    [Trait("Category", "api/shipper/from/a/size/b.GET")]
     public async Task GetCollectionAsync_from為1_size為10_資料庫無資料_回傳應為空集合()
     {
         // arrange
@@ -1060,7 +1060,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Theory]
     [AutoData]
     [Trait("Owner", "Kevin")]
-    [Trait("Category", "api/shipper/all.GET")]
+    [Trait("Category", "api/shipper/from/a/size/b.GET")]
     public async Task GetCollectionAsync_from為1_size為5_資料庫有10筆資料_回傳的集合應有五筆(
         [CollectionSize(10)] IEnumerable<ShipperParameter> parameters)
     {
@@ -1092,7 +1092,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Theory]
     [AutoData]
     [Trait("Owner", "Kevin")]
-    [Trait("Category", "api/shipper/all.GET")]
+    [Trait("Category", "api/shipper/from/a/size/b.GET")]
     public async Task GetCollectionAsync_from為6_size為5_資料庫有10筆資料_回傳的集合應有五筆(
         [CollectionSize(10)] IEnumerable<ShipperParameter> parameters)
     {
@@ -1124,7 +1124,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Theory]
     [AutoData]
     [Trait("Owner", "Kevin")]
-    [Trait("Category", "api/shipper/all.GET")]
+    [Trait("Category", "api/shipper/from/a/size/b.GET")]
     public async Task GetCollectionAsync_from為6_size為10_資料庫有10筆資料_回傳的集合應有五筆(
         [CollectionSize(10)] IEnumerable<ShipperParameter> parameters)
     {
@@ -1156,7 +1156,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     [Theory]
     [AutoData]
     [Trait("Owner", "Kevin")]
-    [Trait("Category", "api/shipper/all.GET")]
+    [Trait("Category", "api/shipper/from/a/size/b.GET")]
     public async Task GetCollectionAsync_from為11_size為5_資料庫有10筆資料_超出範圍_回傳應為空集合(
         [CollectionSize(10)] IEnumerable<ShipperParameter> parameters)
     {

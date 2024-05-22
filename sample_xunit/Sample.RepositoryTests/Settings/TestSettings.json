@@ -2,7 +2,7 @@
   "EnvironmentName": "sample-repository-tests",
   "Mssql": {
     "Image": "mcr.microsoft.com/mssql/server",
-    "Tag": "2017-latest",
+    "Tag": "2019-latest",
     "HostPort": 0,
     "ContainerPort": 1433,
     "SaPassword": "1qa2ws3ed4rf_",
@@ -10,7 +10,7 @@
     "ContainerReadyMessage": "The default language (LCID 0) has been set for engine and full-text services",
     "EnvironmentSettings": [
       "ACCEPT_EULA=Y",
-      "SA_PASSWORD=1qa2ws3ed4rf_"
+      "MSSQL_SA_PASSWORD=1qa2ws3ed4rf_"
     ]
   }
 }
