@@ -28,9 +28,9 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
 {
     private const string BaseRequestUrl = "api/shipper";
 
-    private readonly ITestOutputHelper _testOutputHelper;
-
     private readonly ApiTestClassFixture _classFixture;
+
+    private readonly ITestOutputHelper _testOutputHelper;
 
     private HttpClient _httpClient;
 
@@ -41,9 +41,9 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
     /// <param name="classFixture">classFixture</param>
     public ShipperApiTests(ITestOutputHelper testOutputHelper, ApiTestClassFixture classFixture)
     {
-        this._testOutputHelper = testOutputHelper;
+        _testOutputHelper = testOutputHelper;
         this._classFixture = classFixture;
-        this._httpClient = classFixture.TestWebApplicationFactory.CreateClient();
+        this._httpClient = classFixture.TestWebApplicationFactory.CreateDefaultClient(new HttpClientLogger(testOutputHelper));
     }
 
     ~ShipperApiTests()
@@ -93,9 +93,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("ShipperId error");
                     errors[0].Description.Should().Be("ShipperId 必須大於 0");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -123,9 +120,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("ShipperId error");
                     errors[0].Description.Should().Be("ShipperId 必須大於 0");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -153,9 +147,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("ShipperId error");
                     errors[0].Description.Should().Be("ShipperId 必須大於 0");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -184,9 +175,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     var responseMessage = JsonSerializer.Deserialize<ResponseMessageOutputModel>(JsonSerializer.Serialize(model.Errors));
                     responseMessage.Message.Should().Be(expectedMessage);
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -219,9 +207,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Method.Should().Be("/api/shipper.GET");
                     model.Data.Should().BeEquivalentTo(expectedModel);
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     //---------------------------------------------------------------------------------------------
@@ -239,9 +224,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
 
         // assert
         response.Should().Be415UnsupportedMediaType();
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -267,9 +249,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("CompanyName error");
                     errors[0].Description.Should().Be("CompanyName 不可為 null");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -295,9 +274,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("CompanyName error");
                     errors[0].Description.Should().Be("未輸入 CompanyName");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -325,9 +301,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("CompanyName error");
                     errors[0].Description.Should().Be("CompanyName 長度不可超過 40");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -353,9 +326,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("Phone error");
                     errors[0].Description.Should().Be("Phone 不可為 null");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -381,9 +351,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("Phone error");
                     errors[0].Description.Should().Be("未輸入 Phone");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -410,9 +377,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("Phone error");
                     errors[0].Description.Should().Be("Phone 長度不可超過 24");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -435,9 +399,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Method.Should().Be("/api/shipper.POST");
                     model.Data.Message.Should().Be("create success");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     //---------------------------------------------------------------------------------------------
@@ -455,9 +416,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
 
         // assert
         response.Should().Be415UnsupportedMediaType();
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -483,9 +441,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("ShipperId error");
                     errors[0].Description.Should().Be("ShipperId 必須大於 0");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -511,9 +466,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("CompanyName error");
                     errors[0].Description.Should().Be("CompanyName 不可為 null");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -539,9 +491,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("CompanyName error");
                     errors[0].Description.Should().Be("CompanyName 不可為 null");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -567,9 +516,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("CompanyName error");
                     errors[0].Description.Should().Be("未輸入 CompanyName");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -597,9 +543,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("CompanyName error");
                     errors[0].Description.Should().Be("CompanyName 長度不可超過 40");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -625,9 +568,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("Phone error");
                     errors[0].Description.Should().Be("Phone 不可為 null");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -653,9 +593,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("Phone error");
                     errors[0].Description.Should().Be("未輸入 Phone");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -682,9 +619,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("Phone error");
                     errors[0].Description.Should().Be("Phone 長度不可超過 24");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -716,9 +650,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Method.Should().Be("/api/shipper.PUT");
                     model.Data.Message.Should().Be("update success");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -743,9 +674,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Method.Should().Be("/api/shipper.PUT");
                     model.Errors.Message.Should().Be(expectedMessage);
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -774,7 +702,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
             });
         });
 
-        this._httpClient = webApplicationFactory.CreateClient();
+        this._httpClient = webApplicationFactory.CreateDefaultClient(new HttpClientLogger(this._testOutputHelper));
 
         var parameter = new ShipperUpdateParameter { ShipperId = 1, CompanyName = "test", Phone = "12345678" };
 
@@ -792,9 +720,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Method.Should().Be("/api/shipper.PUT");
                     model.Errors.Message.Should().Be(expectedMessage);
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     //---------------------------------------------------------------------------------------------
@@ -812,9 +737,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
 
         // assert
         response.Should().Be415UnsupportedMediaType();
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -840,9 +762,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("ShipperId error");
                     errors[0].Description.Should().Be("ShipperId 必須大於 0");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -868,9 +787,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors[0].Message.Should().Be("ShipperId error");
                     errors[0].Description.Should().Be("ShipperId 必須大於 0");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -890,7 +806,7 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
             });
         });
 
-        this._httpClient = webApplicationFactory.CreateClient();
+        this._httpClient = webApplicationFactory.CreateDefaultClient(new HttpClientLogger(this._testOutputHelper));
 
         shipperService.IsExistsAsync(Arg.Any<int>()).Returns(false);
 
@@ -911,9 +827,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Method.Should().Be("/api/shipper.DELETE");
                     model.Errors.Message.Should().Be(expectedMessage);
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -944,9 +857,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Method.Should().Be("/api/shipper.DELETE");
                     model.Data.Message.Should().Be(expectedMessage);
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     //---------------------------------------------------------------------------------------------
@@ -971,9 +881,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Method.Should().Be("/api/shipper/all.GET");
                     model.Data.Should().BeEmpty();
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -998,9 +905,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Data.Should().NotBeEmpty();
                     model.Data.Should().HaveCount(1);
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Theory]
@@ -1025,9 +929,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Data.Should().NotBeEmpty();
                     model.Data.Should().HaveCount(10);
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     //---------------------------------------------------------------------------------------------
@@ -1052,9 +953,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Method.Should().Be("/api/shipper/from/1/size/10.GET");
                     model.Data.Should().BeEmpty();
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Theory]
@@ -1084,9 +982,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Data.First().ShipperId.Should().Be(1);
                     model.Data.Last().ShipperId.Should().Be(5);
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Theory]
@@ -1116,9 +1011,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Data.First().ShipperId.Should().Be(6);
                     model.Data.Last().ShipperId.Should().Be(10);
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Theory]
@@ -1148,9 +1040,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Data.First().ShipperId.Should().Be(6);
                     model.Data.Last().ShipperId.Should().Be(10);
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Theory]
@@ -1177,9 +1066,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Method.Should().Be("/api/shipper/from/11/size/5.GET");
                     model.Data.Should().BeEmpty();
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     //---------------------------------------------------------------------------------------------
@@ -1207,9 +1093,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors.Exists(x => x.Message.Contains("CompanyName error")).Should().BeTrue();
                     errors.Exists(x => x.Message.Contains("Phone error")).Should().BeTrue();
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -1236,9 +1119,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     errors.Exists(x => x.Message.Contains("CompanyName error")).Should().BeTrue();
                     errors.Exists(x => x.Message.Contains("Phone error")).Should().BeTrue();
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -1261,9 +1141,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Status.Should().Be("Success");
                     model.Data.Should().BeEmpty();
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -1286,9 +1163,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Status.Should().Be("Success");
                     model.Data.Should().BeEmpty();
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Fact]
@@ -1311,9 +1185,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Status.Should().Be("Success");
                     model.Data.Should().BeEmpty();
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Theory]
@@ -1340,9 +1211,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Status.Should().Be("Success");
                     model.Data.Should().BeEmpty();
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     [Theory]
@@ -1373,9 +1241,6 @@ public sealed class ShipperApiTests : IClassFixture<ApiTestClassFixture>, IDispo
                     model.Data.First().CompanyName.Should().Be("test");
                     model.Data.First().Phone.Should().Be("12345");
                 });
-
-        var responseString = await response.Content.ReadAsStringAsync();
-        this._testOutputHelper.WriteLine($"Response Content: {responseString}");
     }
 
     //---------------------------------------------------------------------------------------------
