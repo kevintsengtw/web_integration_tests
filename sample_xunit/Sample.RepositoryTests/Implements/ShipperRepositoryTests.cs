@@ -235,7 +235,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task GetCollectionAsync_from為1_size為10_資料表裡無資料_應回傳空集合(ShipperRepository sut)
     {
         // arrange

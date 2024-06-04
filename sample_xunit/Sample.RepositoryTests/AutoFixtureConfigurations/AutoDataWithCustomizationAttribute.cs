@@ -21,4 +21,25 @@ public class AutoDataWithCustomizationAttribute : AutoDataAttribute
     })
     {
     }
+
+    public AutoDataWithCustomizationAttribute(params Type[] customizationTypes) : base(() =>
+    {
+        var fixture = new Fixture().Customize(new AutoNSubstituteCustomization());
+
+        foreach (var type in customizationTypes)
+        {
+            if (typeof(ICustomization).IsAssignableFrom(type) && Activator.CreateInstance(type) is ICustomization customization)
+            {
+                fixture.Customize(customization);
+            }
+            else
+            {
+                throw new ArgumentException($"Type {type.Name} does not implement ICustomization.");
+            }
+        }
+
+        return fixture;
+    })
+    {
+    }
 }
