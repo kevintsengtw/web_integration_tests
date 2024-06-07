@@ -52,7 +52,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task IsExistsAsync_輸入的ShipperId_資料不存在_應回傳false(ShipperRepository sut)
     {
         // arrange
@@ -66,7 +66,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task IsExistsAsync_輸入的ShipperId_資料有存在_應回傳True(ShipperRepository sut, ShipperModel model)
     {
         // arrange
@@ -114,7 +114,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task GetAsync_輸入的ShipperId_資料不存在_應回傳null(ShipperRepository sut)
     {
         // arrange
@@ -128,7 +128,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task GetAsync_輸入的ShipperId_資料有存在_應回傳model(ShipperRepository sut, ShipperModel model)
     {
         // arrange
@@ -147,7 +147,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     // GetTotalCountAsync
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task GetTotalCountAsync_資料表裡無資料_應回傳0(ShipperRepository sut)
     {
         // arrange
@@ -161,7 +161,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task GetTotalCountAsync_資料表裡有10筆資料_應回傳10(IFixture fixture, ShipperRepository sut)
     {
         // arrange
@@ -185,7 +185,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     // GetAllAsync
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task GetAllAsync_資料表裡無資料_應回傳空集合(ShipperRepository sut)
     {
         // arrange
@@ -198,7 +198,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task GetAllAsync_資料表裡有10筆資料_回傳的集合裡有10筆(
         ShipperRepository sut,
         [CollectionSize(10)] IEnumerable<ShipperModel> models)
@@ -250,7 +250,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task GetCollectionAsync_from為1_size為10_資料表裡有5筆資料_回傳集合應有5筆(
         ShipperRepository sut,
         [CollectionSize(5)] IEnumerable<ShipperModel> models)
@@ -270,7 +270,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task GetCollectionAsync_from為20_size為10_資料表裡只有10筆資料_from超過總數量_應回傳空集合(
         ShipperRepository sut,
         [CollectionSize(10)] IEnumerable<ShipperModel> models)
@@ -289,7 +289,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task GetCollectionAsync_from為6_size為10_資料表裡有10筆資料_回傳集合應有10筆(
         ShipperRepository sut,
         [CollectionSize(20)] IEnumerable<ShipperModel> models)
@@ -309,7 +309,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task GetCollectionAsync_from為11_size為10_資料表裡有10筆資料_應回傳空集合(
         ShipperRepository sut,
         [CollectionSize(10)] IEnumerable<ShipperModel> models)
@@ -351,7 +351,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task SearchAsync_資料表裡無資料_應回傳空集合(ShipperRepository sut)
     {
         // arrange
@@ -366,7 +366,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task SearchAsync_companyName輸入資料_沒有符合條件的資料_應回傳空集合(
         ShipperRepository sut,
         [CollectionSize(10)] IEnumerable<ShipperModel> models)
@@ -385,7 +385,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task SearchAsync_companyName輸入資料_phone無輸入_有符合條件的資料_回傳集合應包含符合條件的資料(
         IFixture fixture,
         ShipperRepository sut,
@@ -413,7 +413,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task SearchAsync_companyName無輸入_phone輸入資料_有符合條件的資料_回傳集合應包含符合條件的資料(
         IFixture fixture,
         ShipperRepository sut,
@@ -441,7 +441,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task SearchAsync_companyName輸入資料_phone輸入資料_有符合條件的資料_回傳集合應包含符合條件的資料(
         IFixture fixture,
         ShipperRepository sut,
@@ -470,7 +470,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task SearchAsync_companyName輸入資料_phone輸入資料_沒有符合條件的資料_應回傳空集合(
         ShipperRepository sut,
         [CollectionSize(10)] List<ShipperModel> models)
@@ -489,7 +489,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task SearchAsync_companyName輸入資料_phone無輸入_有2筆符合條件的資料_回傳集合應有兩筆(
         IFixture fixture,
         ShipperRepository sut)
@@ -537,7 +537,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task CreateAsync_輸入一個有資料的model_新增完成_回傳Result的Success應為true(ShipperRepository sut, ShipperModel model)
     {
         // arrange
@@ -569,7 +569,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task UpdateAsync_輸入model_要修改的資料並不存在_更新錯誤_回傳Result的Success應為false(ShipperRepository sut, ShipperModel model)
     {
         // arrange
@@ -583,7 +583,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task UpdateAsync_輸入model_要修改的資料存在_更新完成_回傳Result的Success應為true(ShipperRepository sut, ShipperModel model)
     {
         // arrange
@@ -632,7 +632,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task DeleteAsync_輸入ShipperId_要刪除的資料並不存在_刪除錯誤_回傳Result的Success應為false(ShipperRepository sut)
     {
         // arrange
@@ -647,7 +647,7 @@ public sealed class ShipperRepositoryTests : IClassFixture<ShipperRepositoryClas
     }
 
     [Theory]
-    [AutoDataWithCustomization]
+    [AutoDataWithCustomization(typeof(DatabaseHelperCustomization))]
     public async Task DeleteAsync_輸入model_要刪除的資料存在_刪除完成_回傳Result的Success應為true(ShipperRepository sut, ShipperModel model)
     {
         // arrange

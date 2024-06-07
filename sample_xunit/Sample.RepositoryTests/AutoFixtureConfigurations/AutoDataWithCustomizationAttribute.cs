@@ -14,9 +14,7 @@ public class AutoDataWithCustomizationAttribute : AutoDataAttribute
     /// </summary>
     public AutoDataWithCustomizationAttribute() : base(() =>
     {
-        var fixture = new Fixture().Customize(new AutoNSubstituteCustomization())
-                                   .Customize(new DatabaseHelperCustomization());
-
+        var fixture = new Fixture().Customize(new AutoNSubstituteCustomization());
         return fixture;
     })
     {
