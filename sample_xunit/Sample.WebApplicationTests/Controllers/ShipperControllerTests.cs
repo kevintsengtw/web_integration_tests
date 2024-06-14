@@ -27,7 +27,7 @@ public class ShipperControllerTests
         ShipperController sut)
     {
         // arrange
-        shipperService.GetAllAsync().Returns(Enumerable.Empty<ShipperDto>());
+        shipperService.GetAllAsync().Returns([]);
 
         // act
         var actual = await sut.GetAllAsync();
@@ -118,7 +118,7 @@ public class ShipperControllerTests
         var parameter = new ShipperSearchParameter { CompanyName = "test", Phone = "" };
 
         shipperService.SearchAsync(Arg.Any<string>(), Arg.Any<string>())
-                      .Returns(Enumerable.Empty<ShipperDto>());
+                      .Returns([]);
 
         // act
         var actual = await sut.SearchAsync(parameter);
@@ -139,7 +139,7 @@ public class ShipperControllerTests
         var parameter = new ShipperSearchParameter { CompanyName = "", Phone = "021234" };
 
         shipperService.SearchAsync(Arg.Any<string>(), Arg.Any<string>())
-                      .Returns(Enumerable.Empty<ShipperDto>());
+                      .Returns([]);
 
         // act
         var actual = await sut.SearchAsync(parameter);

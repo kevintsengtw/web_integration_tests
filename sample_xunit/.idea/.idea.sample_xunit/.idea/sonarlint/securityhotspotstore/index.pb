@@ -137,3 +137,7 @@ PSample.WebApplication/Infrastructure/Validators/ShipperPageParameterValidator.c
 ZSample.WebApplicationTests/Infrastructure/Validators/ShipperPageParameterValidatorTests.cs,0\3\03f2732f3d8c3e824cd396fc5e0868ff8f2cd474
 s
 CSample.WebApplicationIntegrationTests/Utilities/HttpClientLogger.cs,3\6\369ef127ef92cffde272b752876552c9a5d0c0e8
+R
+"Sample.Domain/Sample.Domain.csproj,8\d\8dfceedad48ec574451262fd355ca52fa9cb782a
+T
+$Sample.Service/Sample.Service.csproj,8\b\8badc4f260d6508e1d5ff27b29c8ec34e9b1e8bf

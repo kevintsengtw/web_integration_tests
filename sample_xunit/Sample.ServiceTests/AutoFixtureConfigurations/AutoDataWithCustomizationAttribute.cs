@@ -13,13 +13,15 @@ public class AutoDataWithCustomizationAttribute : AutoDataAttribute
     /// <summary>
     /// Initializes a new instance of the <see cref="AutoDataWithCustomizationAttribute"/> class
     /// </summary>
-    public AutoDataWithCustomizationAttribute() : base(() =>
+    public AutoDataWithCustomizationAttribute() : base(CreateFixture)
+    {
+    }
+
+    private static IFixture CreateFixture()
     {
         var fixture = new Fixture().Customize(new AutoNSubstituteCustomization())
                                    .Customize(new MapsterMapperCustomization());
 
         return fixture;
-    })
-    {
     }
 }
