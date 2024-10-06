@@ -228,10 +228,10 @@ public class ShipperServiceTests
     // GetCollectionAsync
 
     [Theory]
-    [InlineWithCustomization(0, 10, nameof(from))]
-    [InlineWithCustomization(-1, 10, nameof(from))]
-    [InlineWithCustomization(1, 0, nameof(size))]
-    [InlineWithCustomization(1, -1, nameof(size))]
+    [InlineAutoDataWithCustomization(0, 10, nameof(from))]
+    [InlineAutoDataWithCustomization(-1, 10, nameof(from))]
+    [InlineAutoDataWithCustomization(1, 0, nameof(size))]
+    [InlineAutoDataWithCustomization(1, -1, nameof(size))]
     public async Task GetCollectionAsync_from與size輸入不合規格內容_應拋出ArgumentOutOfRangeException(
         int from, int size, string parameterName, ShipperService sut)
     {
@@ -360,10 +360,10 @@ public class ShipperServiceTests
     // SearchAsync
 
     [Theory]
-    [InlineWithCustomization(null, null)]
-    [InlineWithCustomization("", null)]
-    [InlineWithCustomization(null, "")]
-    [InlineWithCustomization(null, null)]
+    [InlineAutoDataWithCustomization(null, null)]
+    [InlineAutoDataWithCustomization("", null)]
+    [InlineAutoDataWithCustomization(null, "")]
+    [InlineAutoDataWithCustomization(null, null)]
     public async Task SearchAsync_companyName與phone輸入不合規格的內容_應拋出ArgumentException(
         string companyName, string phone, ShipperService sut)
     {

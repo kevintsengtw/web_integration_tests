@@ -20,7 +20,8 @@ public class AutoDataWithCustomizationAttribute : AutoDataAttribute
     private static IFixture CreateFixture()
     {
         var fixture = new Fixture().Customize(new AutoNSubstituteCustomization())
-                                   .Customize(new MapsterMapperCustomization());
+                                   .Customize(new MapsterMapperCustomization())
+                                   .Customize(new FakeTimeProviderCustomization());
 
         return fixture;
     }

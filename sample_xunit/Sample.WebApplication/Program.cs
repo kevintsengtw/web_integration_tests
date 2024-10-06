@@ -23,6 +23,9 @@ builder.Host.UseSerilog((hostingContext, _, loggerConfiguration) =>
 
 // Add services to the container.
 
+// Microsoft.Bcl.TimeProvider (TimeProvider.System)
+builder.Services.AddSingleton(TimeProvider.System);
+
 builder.Services.AddControllers(configure => { configure.Filters.Add<SampleActionResultFilter>(); })
        .ConfigureApiBehaviorOptions(options => { options.SuppressModelStateInvalidFilter = true; });
 
@@ -62,6 +65,7 @@ builder.Services.AddDatabaseConnectionOptions();
 builder.Services.AddScoped<IDatabaseHelper, DatabaseHelper>();
 builder.Services.AddScoped<IShipperRepository, ShipperRepository>();
 builder.Services.AddScoped<IShipperService, ShipperService>();
+// builder.Services.AddScoped<ITradeDateService, TradeDateService>();
 
 var app = builder.Build();
 
