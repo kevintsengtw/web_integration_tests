@@ -103,8 +103,8 @@ public class ShipperController : ControllerBase
     /// <param name="parameter">parameter</param>
     /// <returns></returns>
     [HttpGet]
-    [Produces("application/json", "text/json")]
     [ParameterValidator("parameter")]
+    [Produces("application/json", "text/json")]
     [ProducesResponseType(200, Type = typeof(SuccessResultOutputModel<ShipperOutputModel>))]
     [ProducesResponseType(400, Type = typeof(FailureResultOutputModel<ResponseMessageOutputModel>))]
     public async Task<IActionResult> GetAsync([FromQuery] ShipperIdParameter parameter)

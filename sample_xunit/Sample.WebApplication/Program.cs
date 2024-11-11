@@ -6,9 +6,11 @@ using Sample.Repository.Helpers;
 using Sample.Repository.Implements;
 using Sample.Service.Implements;
 using Sample.Service.Interface;
+using Sample.WebApplication.BackgroundServices;
 using Sample.WebApplication.Infrastructure.ServiceCollections;
 using Sample.WebApplication.Infrastructure.Wrapper.ExceptionHandlers;
 using Sample.WebApplication.Infrastructure.Wrapper.Filters;
+using Scalar.AspNetCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -67,6 +69,11 @@ builder.Services.AddScoped<IShipperRepository, ShipperRepository>();
 builder.Services.AddScoped<IShipperService, ShipperService>();
 // builder.Services.AddScoped<ITradeDateService, TradeDateService>();
 
+// 註冊背景服務
+//builder.Services.AddHostedService<SampleBackgroundService>();
+
+builder.Services.AddHostedService<CronTimeerBackgroundService>();
+
 var app = builder.Build();
 
 app.UseCorrelate();
@@ -75,8 +82,23 @@ app.UseExceptionHandler(_ => { });
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    // Swagger
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    // ReDoc
+    app.UseReDoc(options =>
+    {
+        options.SpecUrl("/swagger/v1/swagger.json");
+        options.RoutePrefix = "redoc";
+    });
+    
+    // Scalar
+    app.MapScalarApiReference(options =>
+    {
+        options.OpenApiRoutePattern = "/swagger/v1/swagger.json";
+        options.WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+    });
 }
 
 app.UseHttpsRedirection();
