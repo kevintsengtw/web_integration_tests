@@ -23,12 +23,12 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.8" />
         <PackageReference Include="Microsoft.Bcl.TimeProvider" Version="8.0.1"/>
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.8" />
-        <PackageReference Include="Scalar.AspNetCore" Version="1.2.10" />
-        <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
+        <PackageReference Include="Scalar.AspNetCore" Version="1.2.49" />
+        <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
         <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
         <PackageReference Include="Sgbj.Cron.CronTimer" Version="1.0.2" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.1" />
-        <PackageReference Include="Swashbuckle.AspNetCore.ReDoc" Version="6.9.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.ReDoc" Version="7.1.0" />
     </ItemGroup>
 
     <ItemGroup>

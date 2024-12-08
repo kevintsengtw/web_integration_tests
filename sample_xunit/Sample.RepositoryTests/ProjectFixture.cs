@@ -17,7 +17,7 @@ public class ProjectCollectionFixture : ICollectionFixture<ProjectFixture>;
 /// </summary>
 public class ProjectFixture : IAsyncLifetime
 {
-    private static IFileSystem FileSystem => new FileSystem();
+    private static FileSystem FileSystem => new();
 
     private static string SettingFile => FileSystem.Path.Combine("Settings", "TestSettings.json");
 
